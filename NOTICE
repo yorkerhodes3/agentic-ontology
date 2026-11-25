@@ -1,0 +1,8 @@
+Wayfinder (agentic-ontology)
+Copyright 2026 The Wayfinder Authors
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Wayfinder is designed to run alongside TrustGraph (https://github.com/trustgraph-ai/trustgraph),
+which is licensed separately under the Apache License, Version 2.0. This repository does not
+contain TrustGraph code.

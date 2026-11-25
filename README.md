@@ -4,7 +4,8 @@
 typed model of their world (an *ontology*) and writes every step it takes to a personal
 ledger, so the person can see what it believed, what it shared, what it did and why.
 
-> **Status: concept stage.** Nothing is built yet. The project follows the
+> **Status: concept approved (v0.4); planning in review.** Nothing is built yet.
+> **Site:** https://yorkerhodes3.github.io/agentic-ontology/ The project follows the
 > [Ethical Tech CoLab project startup guide](https://github.com/Ethical-Tech-CoLab/project-startup-guide):
 > *think in documents, review with a human, then build.*
 
@@ -12,10 +13,10 @@ ledger, so the person can see what it believed, what it shared, what it did and 
 
 | Document | Answers | Status |
 | --- | --- | --- |
-| `CONCEPT-IDEA.md` | Why should this exist, and for whom? | Draft, in review (see open pull requests) |
-| `SPECIFICATION.md` | What exactly does it do? | Not started; waits for concept approval |
-| `PLAN.md` | How is it built, in what order? | Not started |
-| `BACKLOG.md` | What is the very next task? | Not started |
+| `CONCEPT-IDEA.md` | Why should this exist, and for whom? | **Approved** (v0.4, 2026-11-25) |
+| `SPECIFICATION.md` | What exactly does it do? | Draft, in review (see open pull requests) |
+| `PLAN.md` | How is it built, in what order? | Draft, in review |
+| `BACKLOG.md` | What is the very next task? | Draft, in review |
 
 Blank templates for every stage, plus the reviewer's checklist, are in
 [`templates/`](templates/). They are copied unchanged from the startup guide.
@@ -38,4 +39,4 @@ TrustGraph code. The concept's references to TrustGraph are pinned to commit
 
 ## Licence
 
-No licence has been chosen yet. Until one is added, all rights are reserved by default.
+Apache License 2.0. See [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).
