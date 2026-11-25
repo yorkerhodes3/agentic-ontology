@@ -48,7 +48,7 @@ TrustGraph's own agent orchestrator to the gate is a stretch goal (US-19).
 **Goals (v0.4 must achieve):**
 
 1. Every `Must` row of the acceptance matrix passes (A-01–A-05, A-07–A-16). A-01 may
-   instead be reported as "not measured" with a recorded reason, if the week-1 go/no-go
+   instead be reported as "not measured" with a recorded reason, if the M1 go/no-go
    forces the fixture fallback.
 2. The person can see, for any run, what the agent believed, revealed and did, and why,
    from the ledger alone.
@@ -143,11 +143,11 @@ Grouped by area. "Ledger entry" means an entry of the named type written by the 
 
 | ID | Requirement | Story | Acceptance criteria |
 | --- | --- | --- | --- |
-| FR-13 | The agent shall run where the only reachable service is the gate. The gate shall expose its tools over MCP. | US-11 | Given the running stack, when the agent container tries to reach TrustGraph, the LLM server or the internet directly, then each attempt fails. |
+| FR-13 | The agent shall run where the only reachable destination is the gate's MCP port. That includes the host: backend services must not be reachable through the host's gateway address or any host-published port. The gate shall expose its tools over MCP. | US-11 | Given the running stack, when the agent container tries each of: backend container addresses (TrustGraph, Ollama, decision models), the sandbox gateway / host address on every host-published port, `host.docker.internal`, a DNS lookup of a public name, and a public IP address, then every attempt fails, and only the gate's MCP port answers. |
 | FR-14 | The gate shall write the ledger entry for an action before dispatching it. If the ledger write or a rule evaluation fails, the action is not dispatched, the agent gets an error, and `step.failed` is recorded once the writer is available again. | US-12, US-18 | A-16 |
 | FR-15 | Rule precedence: hard ban → consent deny → mandate → trust → approval → decision-model signal. A signal can only make an outcome more cautious (allow → ask the person); it can never turn deny or ask into allow. | US-11 | A-04, A-12. Given a signal that says "safe" on a denied disclosure, then the disclosure is still denied. |
-| FR-16 | Every dispatched action shall carry an idempotency key; a repeated key is not dispatched again. When a run resumes, the gate re-checks consent, mandate expiry and trust before the next action (`run.resumed`). | US-18 | Given a crash after dispatch, when the run resumes, then the action is not repeated, and an expired mandate blocks further offers. |
-| FR-17 | A failed step shall be retried at most twice, then recorded as `step.failed`, and the person is told. A step that needs a missing or unconfirmed fact is withheld, and the person is asked. | US-18 | Given a tool that always fails, then there are exactly 3 attempts and one `step.failed`. |
+| FR-16 | Each **logical action** has a stable `actionId`; each try has its own `attemptId`. The gate persists each action's state (`prepared → dispatched → succeeded \| failed \| unknown`) in the ledger before and after each step. Adapters deduplicate by `actionId`, so a retried or resumed `actionId` can cause its effect at most once. When a run resumes, the gate first resolves any `unknown` action by asking the adapter for that `actionId`, then re-checks consent, mandate expiry and trust before the next action (`run.resumed`). | US-18 | Given a crash **before** dispatch, when the run resumes, then the action is dispatched exactly once. Given a crash **after** the effect but before acknowledgement, when the run resumes, then the adapter reports the effect and no second effect occurs. Given an expired mandate on resume, then no further offers are sent. |
+| FR-17 | A logical action that fails shall be retried at most twice, with the same `actionId` and new `attemptId`s, then recorded as `step.failed`, and the person is told. A step that needs a missing or unconfirmed fact is withheld, and the person is asked. | US-18 | Given a tool that always fails, then there are exactly 3 attempts sharing one `actionId` and one `step.failed`. Given a tool that fails once then succeeds, then the effect occurs exactly once. |
 
 ### 5.6 Decision-model signals
 
@@ -160,7 +160,7 @@ Grouped by area. "Ledger entry" means an entry of the named type written by the 
 | ID | Requirement | Story | Acceptance criteria |
 | --- | --- | --- | --- |
 | FR-19 | Counterparty content (messages, documents) shall be parsed by a quarantined reader that has no tools, into typed fields defined per message kind. Free text is kept only as display text for the person, labelled as counterparty text, and is never passed to the agent or a tool. | US-11 | A-12, including the 3 attacks inside valid fields. |
-| FR-20 | Counterparties not on the person's local trusted list are `unverified`. Trust is checked at first contact and again before every disclosure (`policy.evaluated` with the trust level). | US-11 | A-13 |
+| FR-20 | Counterparties not on the person's local trusted list are `unverified`. Trust is checked at first contact and again before every disclosure (`policy.evaluated` with the trust level). | US-11 | A-13. The S4 fixtures include **permitted** *Quote* disclosures (move-date window, postcodes, inventory size), so that A-13's denominator has real disclosures. They also change the trusted list between first contact and a later disclosure, and that disclosure is then decided on the new trust level. |
 | FR-21 | Each detected attack shall be recorded with one outcome (`ignored`, `denied` or `escalated`), and the person receives one plain-language summary per run. | US-11 | A-12 |
 
 ### 5.8 Ledger
@@ -169,9 +169,9 @@ Grouped by area. "Ledger entry" means an entry of the named type written by the 
 | --- | --- | --- | --- |
 | FR-22 | Each ledger entry shall contain the fields in §7.3. `entryHash` is SHA-256 over the canonical JSON of the unsigned entry, with a domain separator. `signature` is an Ed25519 signature over `entryHash` by the gate's ledger key. | US-12 | A-14, A-15 |
 | FR-23 | Sealing a run shall append `run.sealed` and produce a **head commitment** (run id, entry count, final hash, signature). It is stored outside the run's directory and printed on the readout. | US-12 | A-15 |
-| FR-24 | `verify` shall check the chain, the signatures and the evidence hashes against a head commitment. It reports the first failing sequence number and the kind of failure: edit, insert, delete, reorder, truncate, rollback or evidence change. | US-12 | A-15 |
-| FR-25 | The gate shall keep a separate dispatch log, and `reconcile` shall show a one-to-one match between dispatched actions and ledger entries. | US-12 | A-14 |
-| FR-26 | The ledger shall be exportable as PROV-O Turtle. | US-12 | Given a sealed run, when exported, then the Turtle parses and contains one `prov:Activity` per action entry. |
+| FR-24 | `verify` shall check the chain, the signatures and the evidence hashes against a head commitment. It reports the first failing sequence number and the **observable** failure: signature mismatch, hash-chain or sequence break, evidence-hash mismatch, or head mismatch (count or final hash). It does not claim to identify which tampering was done (truncation and rollback can look identical). The tamper-trial harness records which attack it applied. | US-12 | A-15. Given each of the 35 trials, then `verify` fails and names an observable failure. |
+| FR-25 | The gate shall keep a separate audit log with a stable `eventId` for every event in A-14's categories: each tool call (including denied calls), each disclosure, each decision, and each approval request and decision. `reconcile` shall show exactly one ledger entry per `eventId`, and none without one. One action may produce several events. | US-12 | A-14. Given a run with a denied call, a disclosure and an approval, then each has its own `eventId` and exactly one matching ledger entry. |
+| FR-26 | (Should) The ledger shall be exportable as PROV-O Turtle. | US-12 | Given a sealed run, when exported, then the Turtle parses and contains one `prov:Activity` per action entry. |
 | FR-27 | `status` shall show the current step, pending approvals (with expiry), recent failures and retries, and per-step timings. | US-18 | Given a pending approval, when `status` runs, then it shows the approval and its expiry time. |
 
 ### 5.9 Negotiation (S3)
@@ -273,8 +273,8 @@ is set in PLAN), generated readout pages, and the project site.
 ### 6.5 Ledger verification output
 
 - **Purpose:** tell the person, in one line, whether a run's record is intact.
-- **Key elements:** pass/fail; entries checked; first failure (sequence number and kind);
-  the head commitment used.
+- **Key elements:** pass/fail; entries checked; first failure (sequence number and the
+  observable failure, FR-24); the head commitment used.
 - **Empty state:** an unsealed run says "not sealed: integrity cannot be claimed".
 - **Error state:** a missing head commitment says that truncation and rollback cannot be
   checked.
@@ -306,6 +306,42 @@ is set in PLAN), generated readout pages, and the project site.
 | Purpose | `wf:` | TravelBooking, LeaseRenewal, Quote… |
 | ConsentRule | `wf:` | (class, purpose, recipient kind) → allow, deny or hard ban |
 | Mandate | `wf:` | Signed limits, expiry, issuer |
+
+**Properties.** *Critical* properties make a fact unusable until the person confirms it
+(FR-03). *Single* means at most one value; two different values are a conflict (FR-06).
+
+| Property | Domain | Range | Critical | Single |
+| --- | --- | --- | --- | --- |
+| `schema:name` | any class | `xsd:string` | | |
+| `schema:startDate`, `schema:endDate` | Event | `xsd:date` | yes | yes |
+| `schema:location` | Event | Place | | yes |
+| `schema:address` | Place, LodgingBusiness, Organization | `xsd:string` | | yes |
+| `wf:attends` | Person | Event | | |
+| `wf:dietaryPreference`, `wf:seatPreference` | Person | `xsd:string` (fixed list) | | yes |
+| `wf:nightlyBudget` | Person | `xsd:decimal` | yes | yes |
+| `wf:holds` | Person | IdentityDocument | | |
+| `wf:documentNumber` | IdentityDocument | `xsd:string` | yes | yes |
+| `wf:expiryDate` | IdentityDocument | `xsd:date` | yes | yes |
+| `wf:issuingCountry` | IdentityDocument | `xsd:string` | | yes |
+| `wf:hasRecord` | Person | FinancialRecord, HealthRecord | | |
+| `wf:annualIncome` | IncomeLetter | `xsd:decimal` | yes | yes |
+| `wf:condition` | HealthRecord | `xsd:string` (fictional canary) | | |
+| `wf:tenantOf` | Person | Lease | | |
+| `wf:landlord` | Lease | Organization | | yes |
+| `wf:premises` | Lease | Place | | yes |
+| `wf:monthlyRent` | Lease | `xsd:decimal` | yes | yes |
+| `wf:leaseStart`, `wf:leaseEnd` | Lease | `xsd:date` | yes | yes |
+| `wf:nightlyRate` | LodgingBusiness | `xsd:decimal` | | yes |
+| `wf:walkMinutesToVenue` | LodgingBusiness | `xsd:integer` | | yes |
+| `wf:about`, `wf:statesProperty`, `wf:statesValue`, `wf:source`, `wf:retrievedAt`, `wf:trust`, `wf:expires` | Claim | resource, `xsd:anyURI`, `xsd:string`, `xsd:anyURI`, `xsd:dateTime`, `xsd:string` (fixed list), `xsd:dateTime` | | yes |
+| `wf:targetsClass`, `wf:forPurpose`, `wf:recipientKind`, `wf:effect` | ConsentRule | `xsd:anyURI`, Purpose, `xsd:string`, `xsd:string` (`allow`, `deny` or `hard-ban`) | | yes |
+| `wf:mandateDocument`, `wf:documentHash`, `wf:expires` | Mandate | `xsd:anyURI`, `xsd:string`, `xsd:dateTime` | | yes |
+
+**The three planted malformed facts in F-P (A-03)** are:
+
+1. a passport `wf:expiryDate` of "next spring" (datatype violation);
+2. `wf:monthlyRent` stated about an Event (domain violation);
+3. an Event's `schema:location` pointing to a Person (range violation).
 
 **Relationships:**
 
@@ -341,7 +377,8 @@ is set in PLAN), generated readout pages, and the project site.
 | mandateRef | string | when relevant | id and version |
 | evidence | [{ref, sha256}] | when relevant | Content hashes of sources relied on |
 | body | object | yes | Type-specific content |
-| idempotencyKey | string | for actions | FR-16 |
+| eventId | string | yes | Matches the gate's audit log (FR-25) |
+| actionId, attemptId | string | for actions | FR-16, FR-17 |
 | prevHash | string | yes | All zeros for seq 1 |
 | entryHash | string | yes | FR-22 |
 | signature | string | yes | FR-22 |
@@ -429,11 +466,11 @@ All are local or used at install time. No hosted runtime services.
 
 | ID | Question | Owner | Needed by |
 | --- | --- | --- | --- |
-| OQ-01 | Does the full stack (TrustGraph, Ollama, decision models, Wayfinder) run on the author's hardware? Go/no-go for live extraction. | @yorkerhodes3 | 2026-12-04 (M1) |
-| OQ-02 | Which open-weight model gives the best A-01 within that hardware? | @yorkerhodes3 | 2026-12-04 (M1) |
-| OQ-03 | How is our ontology loaded into TrustGraph: its JSON ontology config, or a Turtle import? (Its spec describes both; unverified.) | @yorkerhodes3 | 2026-12-04 (M1) |
-| OQ-04 | What do TrustGraph's SHACL-AF policies and user context cover on the paths we use? (4-hour spike; nothing depends on the answer.) | @yorkerhodes3 | 2026-12-04 (M1) |
-| OQ-05 | Does a minimal MCP-over-HTTP subset in the gate work with the scenario agent and, for US-19, with TrustGraph's agent? | @yorkerhodes3 | 2026-12-18 (M2) |
+| OQ-01 | Does the full stack (TrustGraph, Ollama, decision models, Wayfinder) run on the author's hardware? Go/no-go for live extraction. | @yorkerhodes3 | 2026-12-11 (M1) |
+| OQ-02 | Which open-weight model gives the best A-01 within that hardware? | @yorkerhodes3 | 2026-12-11 (M1) |
+| OQ-03 | How is our ontology loaded into TrustGraph: its JSON ontology config, or a Turtle import? (Its spec describes both; unverified.) | @yorkerhodes3 | 2026-12-11 (M1) |
+| OQ-04 | What do TrustGraph's SHACL-AF policies and user context cover on the paths we use? (4-hour spike, a Should item; nothing depends on the answer.) | @yorkerhodes3 | 2027-02-26 (by M4) |
+| OQ-05 | Does a minimal MCP-over-HTTP subset in the gate work with the scenario agent and, for US-19, with TrustGraph's agent? | @yorkerhodes3 | 2027-01-22 (M2) |
 | OQ-06 | Interview findings (CONCEPT Q2). | @yorkerhodes3 | 2027-01-08 |
 
 ---

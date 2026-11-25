@@ -8,7 +8,7 @@
 | Field | Value |
 | --- | --- |
 | Last groomed | 2026-11-25 |
-| Current milestone | M1: local stack go/no-go (due 2026-12-04) |
+| Current milestone | M1: local stack go/no-go (due 2026-12-11) |
 
 ---
 
@@ -18,43 +18,45 @@
 - **Ref:** the spec requirement, story or acceptance ID this serves (`FR-03`, `US-01`,
   `A-15`), or `infra`.
 - **Size:** `S` (< 1 h), `M` (a few hours), `L` (a day or more; usually should be split).
+  The number in brackets is the base estimate used in PLAN §10, before the 1.5× buffer.
 - **Status:** `todo` / `doing` / `blocked` / `review` / `done`.
 - Items in `Now` have acceptance criteria. Items in `Later` may be one-liners.
 
 ---
 
-## 🔥 Now: M1, local stack go/no-go (week of 2026-11-30)
+## 🔥 Now: M1, local stack go/no-go (weeks of 2026-11-30 and 2026-12-07)
 
 | ID | Task | Ref | Size | Status | Acceptance criteria |
 | --- | --- | --- | --- | --- | --- |
-| T-001 | Generate a TrustGraph v2.11 Docker Compose config with `npx @trustgraph/config` (Ollama provider; decision-scoring and Cloze services if offered). Start it, and record machine specs, image tags and digests, and start-up time in `research/m1-go-no-go.md`. | OQ-01, infra | M | todo | Given the generated config, when `docker compose up -d` runs, then every TrustGraph container reports healthy within 10 min and the `tg-*` CLI lists at least one flow. The note records CPU, RAM, GPU (if any), free disk and the image digests. |
-| T-002 | Pull 2 candidate open-weight instruct models into Ollama. Smoke-test TrustGraph text completion with each, and record tag, digest, size and tokens per second. | OQ-02, D-09 | S | todo | Given each model, when a fixed 200-token prompt runs through TrustGraph, then a completion returns and the note records its speed. |
-| T-003 | Write `ontology/wayfinder.ttl`: the 15 classes and their properties from SPEC §7.1, with *critical* properties marked and subclass links (BankStatement and IncomeLetter under FinancialRecord). | FR-01, FR-02, FR-03, FR-08 | M | todo | Given the file, when parsed as Turtle (for example by the TrustGraph import in T-004), then it reports 0 errors and exactly 15 classes, and both subclass links resolve. |
-| T-004 | Load the ontology into TrustGraph (JSON ontology config or Turtle import; resolve OQ-03) and write down the exact steps. | OQ-03, FR-01 | M | todo | Given the loaded ontology, when TrustGraph's ontology list is queried, then `wayfinder` appears with 15 classes. The steps are in `research/m1-go-no-go.md`. |
-| T-005 | Create fixture F-P: 12 synthetic persona documents, a gold set of 50 labelled facts (10 critical), and the planted traps listed in CONCEPT §5 (health canary, stale address, passport-validity conflict, 3 malformed facts). | A-01–A-03, A-06 | M | todo | Given `fixtures/persona/`, then 12 documents and `gold.jsonl` with 50 rows exist, 10 marked `critical: true`, each trap tagged. A scan finds no real names, addresses or identifiers (a checklist in the README of the folder). |
-| T-006 | Run OntologyRAG extraction on F-P with each candidate model. Score precision and recall against the gold set with a small script. **Decide go / no-go** for live extraction and record it. | A-01, OQ-01, OQ-02 | M | todo | Given extraction output, when `node test/score-extraction.mjs` runs, then it prints precision, recall and per-class counts. The decision (live or fixture, and which model) is recorded with the numbers. |
-| T-007 | Smoke-test the decision models through TrustGraph: one choice, one score and one yes/no call. Record latency. | FR-18, D-10 | S | todo | Given 20 calls of each kind, then p95 latency is recorded, and a stopped service produces an error the gate can map to `unknown`. |
-| T-008 | Timeboxed 4-hour spike: what do TrustGraph's SHACL-AF policies and user context (Purpose) cover on GraphRAG, SPARQL, agent and MCP paths? | OQ-04 | M | todo | A one-page finding in `research/policy-coverage.md` lists each path as covered / not covered / unknown, with the command used to test it. Nothing else depends on it. |
-| T-009 | Code scaffolding: `package.json` (no dependencies, `"license": "Apache-2.0"`), `node:test` setup, and a CI workflow that runs `npm test` on pull requests. | infra, D-02, D-14 | S | todo | Given a pull request, when CI runs, then `npm test` passes with one placeholder test, and `npm ls --omit=dev` lists no packages. |
+| T-001 | Generate a TrustGraph v2.11 Docker Compose config with `npx @trustgraph/config` (Ollama provider; decision-scoring and Cloze services if offered). Start it, and record machine specs, image tags and digests, and start-up time in `research/m1-go-no-go.md`. | OQ-01, infra | M (3 h) | todo | Given the generated config, when `docker compose up -d` runs, then every TrustGraph container reports healthy within 10 min and the `tg-*` CLI lists at least one flow. The note records CPU, RAM, GPU (if any), free disk and the image digests. |
+| T-002 | Pull 2 candidate open-weight instruct models into Ollama. Smoke-test TrustGraph text completion with each, and record tag, digest, size and tokens per second. | OQ-02, D-09 | S (1 h) | todo | Given each model, when a fixed 200-token prompt runs through TrustGraph, then a completion returns and the note records its speed. |
+| T-003 | Write `ontology/wayfinder.ttl`: the 15 classes and **every property in SPEC §7.1's property table**, with domain, range or datatype, *critical* and *single* markers, and subclass links (BankStatement and IncomeLetter under FinancialRecord). | FR-01, FR-02, FR-03, FR-08 | M (3 h) | todo | Given the file, when parsed as Turtle, then it reports 0 errors and exactly 15 classes. When `node test/check-ontology.mjs` compares it with the SPEC table, then every property, domain, range, critical and single marker matches. |
+| T-004 | Load the ontology into TrustGraph (JSON ontology config or Turtle import; resolve OQ-03) and write down the exact steps. | OQ-03, FR-01 | M (2 h) | todo | Given the loaded ontology, when TrustGraph's ontology list is queried, then `wayfinder` appears with 15 classes. The steps are in `research/m1-go-no-go.md`. |
+| T-005 | Create the 12 synthetic persona documents for fixture F-P, including the planted traps (health canary, stale address, passport-validity conflict, and the 3 malformed facts in SPEC §7.1). | A-01–A-03, A-06 | M (2 h) | todo | Given `fixtures/persona/`, then 12 documents exist, each trap is tagged in `fixtures/persona/TRAPS.md`, and a checklist in that folder confirms no real names, addresses or identifiers. |
+| T-025 | Write the gold set for F-P: 50 labelled facts in `gold.jsonl`, 10 marked critical, each with its source document. | A-01, A-02 | M (2 h) | todo | Given `gold.jsonl`, then it has 50 rows, 10 with `critical: true`, and every row names a document that exists in `fixtures/persona/`. |
+| T-006 | Run OntologyRAG extraction on F-P with each candidate model. Score precision and recall against the gold set with a small script, and check whether the 3 malformed facts were rejected. **Decide go / no-go** for live extraction and record it. | A-01, A-03, OQ-01, OQ-02 | M (3 h) | todo | Given extraction output, when `node test/score-extraction.mjs` runs, then it prints precision, recall, per-class counts and which malformed facts were rejected. The decision (live or fixture, and which model) is recorded with the numbers. Any malformed fact TrustGraph did not reject is noted for the gate's own validator (T-026). |
 
-## ⏭️ Next: M2, gate and ledger (weeks of 2026-12-07 and 2026-12-14)
+## ⏭️ Next: M2, gate and ledger (2026-12-14 → 2027-01-22, no work 12-28 → 01-01)
 
 | ID | Task | Ref | Size | Notes |
 | --- | --- | --- | --- | --- |
-| T-010 | Canonical JSON, entry hashing with domain separator, Ed25519 signing (test keys + local key generation) | FR-22, D-06, D-07 | M | Unit tests with fixed vectors |
-| T-011 | Ledger append, seal, head commitment stored outside the run directory | FR-23 | M | |
-| T-012 | `wf ledger verify` with failure kinds; tamper-trial generator (5 × 7 kinds = 35) | FR-24, A-15 | M | |
-| T-013 | Gate MCP server (minimal JSON-RPC subset over HTTP); tool registry with action classes | FR-11, FR-13, D-05 | M | OQ-05 |
-| T-014 | Rule engine: precedence, consent rules with subclass coverage, hard bans, approvals with 24 h expiry | FR-08–FR-12, FR-15 | M | |
-| T-015 | Write-before-dispatch, fail closed, idempotency keys, resume re-validation, retries | FR-14, FR-16, FR-17, A-16 | M | Fault-injection tests |
-| T-016 | Dispatch log + `wf ledger reconcile` | FR-25, A-14 | S | |
-| T-017 | Compose: `wf-sandbox` (internal) and `wf-backend` networks; agent and gate containers; egress tests | FR-13, D-04 | M | |
-| T-018 | Quarantined reader with typed message schemas; free text display-only | FR-19 | M | |
-| T-019 | Local trusted list; trust check at first contact and before each disclosure | FR-20, A-13 | S | |
-| T-020 | Decision-model adapter; `signal.scored`; `unknown` → ask | FR-18 | S | |
-| T-021 | S4 fixtures: 10 attacks, 3 inside valid fields; attack outcomes and the person's summary; harness checks A-12 and A-13 | FR-21, A-12, A-13 | M | |
-| T-022 | Scenario agent with adversarial mode | D-15 | M | |
-| T-023 | `wf status` | FR-27, US-18 | S | |
+| T-010 | Canonical JSON, entry hashing with domain separator, Ed25519 signing (test keys + local key generation) | FR-22, D-06, D-07 | M (2 h) | Unit tests with fixed vectors |
+| T-011 | Ledger append, seal, head commitment stored outside the run directory | FR-23 | M (2 h) | |
+| T-012 | `wf ledger verify` with failure kinds; tamper-trial generator (5 × 7 kinds = 35) | FR-24, A-15 | M (3 h) | |
+| T-013 | Gate MCP server (minimal JSON-RPC subset over HTTP); tool registry with action classes | FR-11, FR-13, D-05 | M (3 h) | OQ-05 |
+| T-014 | Rule engine: precedence, consent rules with subclass coverage, hard bans, approvals with 24 h expiry | FR-08–FR-12, FR-15 | M (4 h) | |
+| T-015 | Write-before-dispatch, fail closed, `actionId` / `attemptId` with persisted action states, adapter deduplication, resume re-validation, retries | FR-14, FR-16, FR-17, A-16 | M (4 h) | Fault-injection tests: crash before dispatch; crash after effect before acknowledgement |
+| T-016 | Gate audit log with an `eventId` for every A-14 event (including denied calls) + `wf ledger reconcile` | FR-25, A-14 | M (2 h) | |
+| T-017 | Compose: `wf-sandbox` (internal) and `wf-backend` networks; no published backend ports during runs (`admin` profile on 127.0.0.1); `DOCKER-USER` allow-only-gate rule on Linux; FR-13 negative tests incl. host gateway, published ports, `host.docker.internal` | FR-13, D-04 | M (3 h) | |
+| T-018 | Quarantined reader with typed message schemas; free text display-only | FR-19 | M (3 h) | |
+| T-019 | Local trusted list; trust check at first contact and before each disclosure | FR-20, A-13 | S (1 h) | |
+| T-020 | Decision-model adapter; `signal.scored`; `unknown` → ask | FR-18 | S (1 h) | |
+| T-021 | S4 fixtures: 10 attacks (3 inside valid fields), permitted Quote disclosures, a trusted-list change mid-run; attack outcomes and the person's summary; harness checks A-12 and A-13 | FR-21, A-12, A-13 | M (3 h) | |
+| T-022 | Scenario agent with adversarial mode | D-15 | M (3 h) | |
+| T-023 | `wf status` | FR-27, US-18 | S (1 h) | |
+| T-009 | Code scaffolding: `package.json` (no dependencies, Apache-2.0), `node:test`, CI running `npm test` on pull requests | infra, D-02, D-14 | S (1 h) | Was in Now; moved to keep M1 inside two weeks |
+| T-007 | Decision-model smoke test through TrustGraph (choice, score, yes/no); p95 latency; stopped service maps to `unknown` | FR-18, D-10 | S (1 h) | Moved from M1 |
+| T-026 | Gate-side ontology validator (datatype, domain, range) as a second check after TrustGraph's | FR-02, A-03 | M (2 h) | |
 
 ## 🧊 Later: M3–M5, Should items, and after v0.4
 
@@ -71,14 +73,15 @@
 | T-040 | Gate reads from TrustGraph with purpose filtering; confirm and retract facts | FR-03, FR-09, FR-10 | M4 |
 | T-041 | S1: hotel fixture, draft-not-pay, approvals, "why this hotel?" | A-01–A-05 | M4 |
 | T-042 | Fixture mode for beliefs | FR-04 | M4 (needed only if M1 says no-go) |
+| T-008 | Timeboxed 4-hour spike on TrustGraph SHACL-AF policy and user-context coverage (GraphRAG, SPARQL, agent, MCP) | OQ-04 | Should; nothing depends on it |
 | T-043 | S2: claims, expiry, conflicts, plan-invalidation stop | FR-05–FR-07, A-06 | Should |
 | T-044 | A-18 baseline: structured profile with JSON Schema | FR-39, A-18 | Should |
-| T-045 | PROV-O Turtle export of the ledger | FR-26 | M4 |
+| T-045 | PROV-O Turtle export of the ledger | FR-26 | Should |
 | T-046 | Determinism check in CI | FR-38 | M2/M3 |
 | T-050 | Harness report (JSON + Markdown) covering every A-ID | FR-37 | M5 |
 | T-051 | Publish report, recorded runs and readouts on the site | FR-40 | M5 |
 | T-052 | README run guide; tag `v0.4.0` | DoD | M5 |
-| T-053 | A-17 usability check with 3 people | A-17 | After M5 (2027-02-12) |
+| T-053 | A-17 usability check with 3 people | A-17 | After M5 (by 2027-03-19) |
 | T-054 | Five interviews and one written incident | CONCEPT Q2 | Runs alongside; by 2027-01-08 |
 | T-060 | TrustGraph agent orchestrator through the gate | US-19, FR-41 | Could |
 | T-061 | Hosted LLM adapter, network counterparty transport, SATM / ERC-8004 identity, public hash anchoring | D-16 | After v0.4 (hosted services excluded) |
@@ -112,7 +115,7 @@
 | ID | Question | Asked | Answered |
 | --- | --- | --- | --- |
 | Q-01 | What machine will run the stack (CPU, RAM, GPU, free disk)? T-001 records it, but knowing now helps pick T-002's candidate models. | 2026-11-25 | |
-| Q-02 | Is ~12 h/week until 2027-01-29 right? If not, PLAN §11's cut list applies. | 2026-11-25 | |
+| Q-02 | Is ~12 h/week right? At that rate v0.4 lands on 2027-03-05 (PLAN §10). More hours bring the date forward; fewer trigger PLAN §11. | 2026-11-25 | |
 | Q-03 | Push-triggered Pages deploys made by an automation token show **action required**. Approve them in the Actions tab, or keep using **Run workflow**? | 2026-11-25 | |
 
 ---
