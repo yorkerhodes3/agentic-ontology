@@ -1,4 +1,4 @@
-# agentic-ontology — Wayfinder
+# Wayfinder - Agentic Ontology
 
 **Wayfinder** is a concept for a personal AI agent that acts for its person from a small,
 typed model of their world (an *ontology*) and writes every step it takes to a personal
@@ -6,7 +6,9 @@ ledger, so the person can see what it believed, what it shared, what it did and 
 
 > **Status: concept and plan approved; building milestone M1.** Nothing runnable yet.
 >
-> **Site:** https://yorkerhodes3.github.io/agentic-ontology/
+> **Site:** https://yorkerhodes3.github.io/agentic-ontology/ (with a selectable style guide:
+> CoLab by default, MetaMask and neocloud presets; see the
+> [style guide page](https://yorkerhodes3.github.io/agentic-ontology/style-guide.html))
 
 The project follows the
 [Ethical Tech CoLab project startup guide](https://github.com/Ethical-Tech-CoLab/project-startup-guide):
@@ -39,6 +41,19 @@ TrustGraph code. The concept's references to TrustGraph are pinned to commit
 - [Agentic Language Development](https://github.com/Ethical-Tech-CoLab/agentic-language-development): grounded, auditable language between isolated agents, with tamper-evident ledgers
 - [Diplomacy Table](https://github.com/Ethical-Tech-CoLab/diplomacy-table-live) and [Diplomatic Simulator](https://github.com/Ethical-Tech-CoLab/diplomatic-simulator): multi-party AI negotiation
 - [Neocloud Supply OS negotiation room](https://github.com/yorkerhodes3/neocloud-supply-os): agent-to-agent negotiation inside a signed mandate
+
+## Working on the site
+
+The site in `docs/` is static: no build step and no runtime dependencies.
+
+```bash
+npm test        # theme contrast for every style guide, self-hosted fonts, platform profiles vs SPECIFICATION §9.1
+npm run serve   # http://127.0.0.1:8765/
+```
+
+Style guides live in `docs/assets/js/themes.js`; platform profiles in
+`docs/assets/js/platforms.js`. Pushes to `main` that touch the site run the tests and
+then deploy to GitHub Pages.
 
 ## Licence
 

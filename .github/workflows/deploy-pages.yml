@@ -1,12 +1,12 @@
 name: Deploy site to GitHub Pages
 
-# Publishes docs/ to GitHub Pages on every push to main that touches the site.
-# Pages source is "GitHub Actions" (Settings -> Pages).
+# Publishes docs/ to GitHub Pages on every push to main that touches the site,
+# after the tests pass. Pages source is "GitHub Actions" (Settings -> Pages).
 
 on:
   push:
     branches: [main]
-    paths: ['docs/**', '.github/workflows/deploy-pages.yml']
+    paths: ['docs/**', 'test/**', 'SPECIFICATION.md', 'package.json', '.github/workflows/deploy-pages.yml']
   workflow_dispatch:
 
 permissions:
@@ -19,7 +19,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+
   deploy:
+    needs: test
     runs-on: ubuntu-latest
     environment:
       name: github-pages
