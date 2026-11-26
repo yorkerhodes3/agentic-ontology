@@ -11,6 +11,9 @@ The site's design system, theme engine, style-guide page and page shell are adap
 Neocloud Supply OS (https://github.com/yorkerhodes3/neocloud-supply-os), Apache License 2.0,
 which ports the Ethical Tech CoLab design system.
 
+The negotiation engine in docs/assets/js/vendor/neocloud-nego/ is copied unmodified from
+Neocloud Supply OS at commit 96a6161 (Apache License 2.0); see the README in that folder.
+
 Third-party material under its own licence:
 
 - Web fonts (SIL Open Font License 1.1), in docs/assets/fonts/ — see docs/assets/fonts/LICENSES.md

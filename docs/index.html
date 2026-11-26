@@ -64,7 +64,8 @@
     <p class="lede reveal d2"><b>Wayfinder</b> is a personal AI agent that acts for you from <b>facts you own</b> and <b>rules you set</b>, and records every step in a <b>ledger you keep</b>. A small ontology decides what it may believe, reveal and do; the ledger shows what it did and why.</p>
     <div class="cta reveal d3">
       <a class="btn primary btn-sweep" href="https://github.com/yorkerhodes3/agentic-ontology/blob/main/CONCEPT-IDEA.md">Read the concept →</a>
-      <a class="btn" href="#negotiate">What did my agent negotiate?</a>
+      <a class="btn" href="simulate.html">Watch agents at work</a>
+      <a class="btn" href="negotiate.html">Both sides of a negotiation</a>
       <a class="btn ghost" href="#platforms">How it runs</a>
     </div>
     <div class="statstrip reveal">
@@ -197,15 +198,17 @@
 <section class="band" id="scenarios" aria-labelledby="scenarios-title">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">05 · Four scenarios</span>
+      <span class="eyebrow">05 · Four scenarios, one exploration</span>
       <h2 id="scenarios-title" class="fluid-h2">Tested on synthetic lives. <span class="display-em">Pass rules fixed first.</span></h2>
       <p class="lede">One made-up persona, made-up counterparties and saved web pages. Every run writes a ledger; every pass rule is an acceptance ID in the concept (A-01 to A-18).</p>
     </div>
     <div class="scn-grid">
-      <article class="card mscn reveal"><div class="mscn-top"><span class="num">S1</span><span class="badge ok">Must</span></div><h3>Get me to the conference</h3><p class="small muted">Typed, confirmed facts → purpose-bound sharing → a booking drafted but not paid → "why this hotel?"</p></article>
-      <article class="card mscn reveal d1"><div class="mscn-top"><span class="num">S2</span><span class="badge warn">Should</span></div><h3>The world changed</h3><p class="small muted">Two dated snapshots disagree on the venue, and a passport-validity rule breaks the plan. The agent must stop and ask.</p></article>
-      <article class="card mscn reveal d2"><div class="mscn-top"><span class="num">S3</span><span class="badge ok">Must</span></div><h3>Lease renewal, agent to agent</h3><p class="small muted">Six issues negotiated inside a signed mandate. Only the person can agree. Bank statements: never.</p></article>
-      <article class="card mscn reveal"><div class="mscn-top"><span class="num">S4</span><span class="badge ok">Must</span></div><h3>The hostile counterparty</h3><p class="small muted">Ten attacks, three hidden inside valid fields. No blocked disclosure; each attempt is recorded.</p></article>
+      <a class="card hover mscn reveal" href="simulate.html?scenario=s1#run"><div class="mscn-top"><span class="num">S1</span><span class="badge ok">Must</span></div><h3>Get me to the conference</h3><p class="small muted">Typed, confirmed facts → purpose-bound sharing → a booking drafted but not paid → "why this hotel?"</p><span class="go">Watch it run →</span></a>
+      <a class="card hover mscn reveal d1" href="simulate.html?scenario=s2#run"><div class="mscn-top"><span class="num">S2</span><span class="badge warn">Should</span></div><h3>The world changed</h3><p class="small muted">Two dated snapshots disagree on the venue, and a passport-validity rule breaks the plan. The agent must stop and ask.</p><span class="go">Watch it run →</span></a>
+      <a class="card hover mscn reveal d2" href="simulate.html?scenario=s3#run"><div class="mscn-top"><span class="num">S3</span><span class="badge ok">Must</span></div><h3>Lease renewal, agent to agent</h3><p class="small muted">Six issues negotiated inside a signed mandate. Only the person can agree. Bank statements: never.</p><span class="go">Watch it run →</span></a>
+      <a class="card hover mscn reveal" href="simulate.html?scenario=s4#run"><div class="mscn-top"><span class="num">S4</span><span class="badge ok">Must</span></div><h3>The hostile counterparty</h3><p class="small muted">Ten attacks, three hidden inside valid fields. No blocked disclosure; each attempt is recorded.</p><span class="go">Watch it run →</span></a>
+      <a class="card hover mscn reveal d1" href="simulate.html?scenario=s5#run" style="border-style:dashed"><div class="mscn-top"><span class="num">S5</span><span class="badge">Beyond v0.4</span></div><h3>Two agents, one owner</h3><p class="small muted">A design exploration: a travel agent and a calendar agent working for the same person through one gate and one ledger.</p><span class="go">Watch it run →</span></a>
+      <a class="card hover mscn reveal d2" href="simulate.html#board"><div class="mscn-top"><span class="num">∑</span><span class="badge info">Live</span></div><h3>The whole workload</h3><p class="small muted">Many runs at once on one board: which are moving, which need you, and how many ledger entries each has written.</p><span class="go">Open the simulation dashboard →</span></a>
     </div>
   </div>
 </section>
@@ -236,6 +239,7 @@
       <div class="stat"><b>0</b><span>walked away</span></div>
     </div>
     <p class="small muted" style="margin-top:16px">In S3, Wayfinder turns this kind of evidence into a clause-by-clause readout. Every concession links to the ledger entry that explains it, and the landlord's copy never shows your limits.</p>
+    <div class="row wrap-row" style="gap:10px;margin-top:18px"><a class="btn primary btn-sweep" href="negotiate.html">See both sides of the lease negotiation →</a><a class="btn ghost" href="negotiate.html#readout">The lease readout</a></div>
   </div>
 </section>
 

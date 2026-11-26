@@ -14,7 +14,8 @@ const NAV = [
   { href: 'index.html#ledger', label: 'Ledger', page: 'index' },
   { href: 'index.html#platforms', label: 'Platforms', page: 'index' },
   { href: 'index.html#scenarios', label: 'Scenarios', page: 'index' },
-  { href: 'index.html#negotiate', label: 'Negotiation', page: 'index' },
+  { href: 'simulate.html', label: 'Simulation', page: 'simulate' },
+  { href: 'negotiate.html', label: 'Negotiation', page: 'negotiate' },
   { href: 'index.html#roadmap', label: 'Roadmap', page: 'index' },
   { href: 'index.html#documents', label: 'Documents', page: 'index' },
   { href: 'style-guide.html', label: 'Style guide', page: 'style-guide' },
@@ -70,7 +71,7 @@ function footHTML() {
     <div><div class="brandmark" style="margin-bottom:14px">${mark('foot')}<span class="bm-text"><span class="bm-name">Wayfinder</span><span class="bm-sub">Agentic Ontology</span></span></div>
       <p>A personal AI agent that acts from facts you own and rules you set, and records every step in a ledger you keep.</p>
       <p class="tiny">Built with the <a class="inline" href="https://github.com/Ethical-Tech-CoLab/project-startup-guide">Ethical Tech CoLab</a> method: think in documents, review with a human, then build.</p></div>
-    <div><h5>Explore</h5><a href="index.html#idea">Four jobs</a><a href="index.html#ledger">Personal ledger</a><a href="index.html#platforms">Platforms</a><a href="index.html#negotiate">Negotiation readout</a><a href="style-guide.html">Style guide</a></div>
+    <div><h5>Explore</h5><a href="index.html#idea">Four jobs</a><a href="index.html#ledger">Personal ledger</a><a href="index.html#platforms">Platforms</a><a href="simulate.html">Simulation dashboard</a><a href="negotiate.html">Both sides of a negotiation</a><a href="style-guide.html">Style guide</a></div>
     <div><h5>Documents</h5><a href="${REPO}/blob/main/CONCEPT-IDEA.md">CONCEPT-IDEA.md</a><a href="${REPO}/blob/main/SPECIFICATION.md">SPECIFICATION.md</a><a href="${REPO}/blob/main/PLAN.md">PLAN.md</a><a href="${REPO}/blob/main/BACKLOG.md">BACKLOG.md</a><a href="${REPO}">Repository</a></div>
     <div><h5>Lineage</h5><a href="https://github.com/trustgraph-ai/trustgraph">TrustGraph</a><a href="https://github.com/yorkerhodes3/neocloud-supply-os">Neocloud Supply OS</a><a href="https://github.com/Ethical-Tech-CoLab/diplomacy-table-live">Diplomacy Table</a><a href="https://github.com/yorkerhodes3/sovereign-agent-trust-mesh">Sovereign Agent Trust Mesh</a><a href="https://github.com/Ethical-Tech-CoLab/agentic-language-development">Agentic Language Development</a></div>
   </div>

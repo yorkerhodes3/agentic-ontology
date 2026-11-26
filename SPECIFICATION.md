@@ -104,6 +104,7 @@ TrustGraph's own agent orchestrator to the gate is a stretch goal (US-19).
 | US-18 | As the **person**, I want to see what the agent is doing now, including failures, retries and approvals waiting for me, so that nothing happens out of sight. | Must |
 | US-19 | As the **researcher**, I want TrustGraph's agent orchestrator to run S1 through the gate as its only tool server, so that the gate is shown to work with a general agent. | Could |
 | US-20 | As the **person**, I want to run Wayfinder with the same commands and the same guarantees on my Mac, my Windows PC, a B3IQ server or a Mac Studio M5 Ultra, so that I can use the hardware I have. | Must |
+| US-21 | As a **site visitor**, I want to watch agentic work in progress (many runs at once, one run step by step, and both sides of a negotiation), so that I can see how the person, agents, gate, models, tools and ledger work together. | Should |
 
 ## 5. Functional requirements
 
@@ -210,6 +211,8 @@ Grouped by area. "Ledger entry" means an entry of the named type written by the 
 | FR-39 | A baseline mode shall replace the ontology with a structured profile (JSON Schema), keeping the same gate and ledger, for A-18. | US-16 | A-18 |
 | FR-40 | The project site shall present the concept and, from M5, the scenario report and recorded synthetic runs with their readouts and instructions for verifying them. | US-17 | Given the site at M5, then each recorded run links its readout, ledger and head commitment. |
 | FR-41 | (Could) TrustGraph's agent orchestrator shall be configurable with the gate as its only MCP tool server and run S1. | US-19 | Given that configuration, when S1 runs, then every action appears in the ledger and A-04 still passes. |
+| FR-44 | The site shall include a **simulation dashboard** built from one event model for every scenario. It has a workload board of runs (running, waiting for the person, done) and a run view. The run view has one lane per element (the person, each agent, the gate, TrustGraph, the local models, tools or a counterparty, and the ledger), a live map, the hash-chained ledger with verify and tamper demonstrations, the approvals queue, and one plug-in panel per scenario. Runs are synthetic, deterministic for a given seed and set of decisions, and labelled as simulations of the design. S5, "Two agents, one owner", is shown as a design exploration beyond v0.4 (CONCEPT-IDEA §6). | US-21 | Given the same scenario, seed and decisions, then the run and its ledger hashes are identical. Given any run, then every dispatch follows a ledger write, every gate decision is written, and the ledger verifies against its head. An edited, deleted, reordered or cut-off entry is detected. Given S5, then no event goes directly from one agent to another. |
+| FR-45 | The site shall include a **two-sides negotiation screen** for S3. It runs the vendored engine (D-11) on F-L1 and F-L2 and shows each agent's private simulation at one table: its brief, concession curve, opponent model and latest decision. The visitor can view as the tenant, the landlord or both, and swap sides. It ends with a clause readout for the chosen side. | US-21 | Given "view as tenant", then the landlord agent's weights, walk-away point and curve are not shown, and the reverse for "view as landlord". Given F-L2, then no settlement occurs (A-08). |
 
 ### 5.13 Platform adapters
 
@@ -539,5 +542,10 @@ The boxes above were ticked by the AI assistant on the reviewer's instruction.
 platform profiles for `macos`, `mac-studio-m5-ultra`, `windows`, `b3iq` and `linux`
 (SPEC §9.1, US-20, FR-42, FR-43; PLAN D-17), with platform-matrix tasks in M5. The
 schedule moves to 15 working weeks, with the demo on 2027-03-19 (CONCEPT-IDEA v0.4.1).
+
+**Amendment (2026-11-26, PR #5):** added US-21, FR-44 (simulation dashboard) and FR-45
+(two-sides negotiation screen), requested by @yorkerhodes3. They are site features that
+simulate the designed system; they do not change any v0.4 acceptance ID. S5 is a design
+exploration beyond v0.4.
 
 [bmj-deploy]: https://github.com/yorkerhodes3/bare-metal-jacket/blob/8ac98575b8fa7ff17a926b361ff9ead678fabbe3/docs/operations/deployment-testing.md

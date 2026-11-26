@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en" data-ground="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulation · Wayfinder - Agentic Ontology</title>
+<meta name="description" content="Watch Wayfinder's agentic workloads in progress: a live board of runs, one run from start to finish across every element (person, agents, gate, TrustGraph, local models, tools, counterparties and the hash-chained ledger), and two agents working for one owner.">
+<link rel="canonical" href="https://yorkerhodes3.github.io/agentic-ontology/simulate.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Wayfinder - Agentic Ontology">
+<meta property="og:title" content="Simulation · Wayfinder - Agentic Ontology">
+<meta property="og:description" content="Agentic workloads in progress: every gate decision, model signal, tool call and ledger write, live.">
+<meta property="og:url" content="https://yorkerhodes3.github.io/agentic-ontology/simulate.html">
+<meta property="og:image" content="https://yorkerhodes3.github.io/agentic-ontology/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Wayfinder - Agentic Ontology: the project home page, showing the headline and an ontology graph.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yorkerhodes3.github.io/agentic-ontology/assets/og-image.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#120c1a">
+<script>try{var c=JSON.parse(localStorage.getItem('wf.vars')||'null'),q=new URLSearchParams(location.search).get('brand');if(c&&(!q||q===c.id)){var r=document.documentElement;r.dataset.ground=c.ground;for(var k in c.vars)r.style.setProperty(k,c.vars[k]);}}catch(e){}</script>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/sim.css">
+<script type="module" src="assets/js/pages/simulate.js"></script>
+</head>
+<body>
+<a href="#main" class="sr-only">Skip to content</a>
+<header data-shell="nav"></header>
+
+<main id="main" class="sim-root">
+<section class="page-hero">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="eyebrow">Simulation dashboard</span>
+    <h1 class="fluid-h1">Agentic work, <span class="display-em">in progress</span>.</h1>
+    <p class="lede">A board of runs that are working right now, and one run you can follow from the first request to the sealed ledger. Every element has its own lane: the person, each agent, the gate, TrustGraph, the local models, tools or counterparties, and the ledger. Every gate decision is written to the ledger before anything is sent.</p>
+    <div class="row wrap-row" style="gap:10px">
+      <a class="btn primary btn-sweep" href="#board">See the workload</a>
+      <a class="btn" href="#run">Follow one run</a>
+      <a class="btn" href="?scenario=s5#run">Two agents, one owner</a>
+      <a class="btn ghost" href="negotiate.html">Both sides of a negotiation →</a>
+    </div>
+    <div class="notice"><b>Simulated, synthetic and deterministic.</b> These runs show the designed system (SPECIFICATION v0.2.0); the real gate and ledger are built in M2. The S3 negotiation is computed live by the real vendored Neocloud engine. Everything else is a scripted flow with template text: no LLM runs, no real data, payments are stubs and signatures are not simulated (hash chain only). The same seed and the same decisions always give the same run and the same hashes.</div>
+  </div>
+</section>
+
+<!-- ============ BOARD ============ -->
+<section class="band" id="board" aria-labelledby="board-title">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <span class="eyebrow">01 · Workload</span>
+      <h2 class="fluid-h2" id="board-title">Many flows, <span class="display-em">one board</span>.</h2>
+      <p class="lede">Each card is a run of one scenario, moving live. A run that needs a decision stops and waits for you; nothing that needs approval goes ahead on its own. Open any card to follow it in the run view below.</p>
+    </div>
+    <div class="sim-summary" id="boardSummary"></div>
+    <p class="sr-only" id="boardAnnounce" aria-live="polite"></p>
+    <div class="board-bar">
+      <div class="filters" id="boardFilters" role="group" aria-label="Filter runs" style="margin:0"></div>
+      <span class="spacer"></span>
+      <label class="switch"><input type="checkbox" id="boardLive" checked> Live</label>
+      <button class="btn sm" id="boardReset">Restart the workload</button>
+    </div>
+    <div class="board-grid" id="boardGrid"></div>
+  </div>
+</section>
+
+<!-- ============ ONE TEMPLATE ============ -->
+<section class="band" id="template" aria-labelledby="tpl-title">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <span class="eyebrow">02 · One template</span>
+      <h2 class="fluid-h2" id="tpl-title">Is every flow one template? <span class="display-em">Yes.</span></h2>
+      <p class="lede">Every scenario is the same three things: one event model, a set of lanes taken from the scenario, and one plug-in panel for what is special about it. The run view never changes; a new scenario is new data, not a new screen.</p>
+    </div>
+    <div class="tpl-grid">
+      <div class="card"><span class="k">1 · One event model</span><h3>Who sent what to whom</h3><p class="small muted">Every step is an event from one lane to another, with a kind and, for gate decisions, an outcome, the options considered, the rule and the sources. Ledger writes are events too, so they show up in every view.</p><pre>{ from: "agent:travel", to: "gate",
+  kind: "call", label: "booking.pay",
+  outcome: "escalated", entrySeq: 11,
+  why: { options, rule, signal, sources } }</pre></div>
+      <div class="card"><span class="k">2 · Lanes from the scenario</span><h3>One lane per element</h3><p class="small muted">The person, each agent (one or more), the gate, TrustGraph, the local models, then tools <i>or</i> a counterparty, then the ledger. Two agents means two agent lanes, in their own colours, and nothing else changes.</p><div class="lane-pills" id="tplLanes" style="margin-top:12px"></div></div>
+      <div class="card"><span class="k">3 · A plug-in panel</span><h3>What is special</h3><p class="small muted">Hotels being narrowed (S1), claims that disagree (S2), the negotiation and its clauses (S3), ten attacks (S4), and hand-offs between two agents (S5). Panels read the same event stream.</p><div class="lane-pills" style="margin-top:12px"><span>hotels</span><span>claims</span><span>negotiation</span><span>attacks</span><span>coordination</span></div></div>
+    </div>
+    <div class="table-wrap"><table class="t" id="tplTable"><caption class="sr-only">How each scenario fills the template (seed 42, default decisions)</caption></table></div>
+  </div>
+</section>
+
+<!-- ============ RUN VIEW ============ -->
+<section class="band" id="run" aria-labelledby="run-title">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <span class="eyebrow">03 · One run, start to finish</span>
+      <h2 class="fluid-h2" id="run-title">Follow every element, <span class="display-em">every write</span>.</h2>
+      <p class="lede">Press play. Requests move between elements on the map, the swimlanes record every step, and the ledger grows block by block. When a decision is needed the run stops for you. Click any event or ledger block to see why it happened.</p>
+    </div>
+    <div class="run-bar" role="toolbar" aria-label="Run controls">
+      <div class="seg" id="scnSeg" role="group" aria-label="Scenario"></div>
+      <span id="s3Opts" class="row" style="gap:8px" hidden>
+        <label>Fixture <select id="fixSel"></select></label>
+        <label>Landlord <select id="styleSel"></select></label>
+        <label>Tenant <select id="oursSel"></select></label>
+      </span>
+      <label>Seed <input type="number" id="seedIn" min="0" max="99999" value="42"></label>
+      <button class="btn sm primary" id="playBtn" aria-label="Play">▶ Play</button>
+      <button class="btn sm" id="stepBtn" title="Next event">Step ›</button>
+      <button class="btn sm ghost" id="restartBtn" title="Back to the start">↺</button>
+      <div class="seg" id="speedSeg" role="group" aria-label="Speed"><button aria-pressed="false" data-speed="0.5">½×</button><button aria-pressed="true" data-speed="1">1×</button><button aria-pressed="false" data-speed="2">2×</button><button aria-pressed="false" data-speed="5">5×</button></div>
+      <label class="switch" title="Use each approval's default and keep going"><input type="checkbox" id="autoDecide"> Autopilot</label>
+      <div class="run-scrub"><input type="range" id="scrub" min="0" max="1" value="0" aria-label="Position in the run"><span class="run-status" id="runStatus"></span></div>
+    </div>
+    <div class="run-head" id="runHead"></div>
+    <div class="run-grid">
+      <div class="panel">
+        <div class="panel-head"><h4>Live map</h4><span class="gate-now" id="gateSay" aria-live="polite"></span><span class="spacer"></span><span class="kbd-hint" id="mapHint"></span></div>
+        <svg class="topo" id="topo" viewBox="0 0 760 430" role="img" aria-label="Live map of the run: the person, agents, gate, TrustGraph, local models, tools or counterparty, and the ledger, with the current message moving between them."></svg>
+        <div class="legend" id="legend"></div>
+      </div>
+      <div class="side-stack">
+        <div class="panel"><div class="panel-head"><h4>Agents · task boards</h4></div><div class="tasks" id="tasks"></div></div>
+        <div class="panel"><div class="panel-head"><h4>Gate · decisions so far</h4></div><div class="score" id="score"></div><div class="score-foot" id="scoreFoot"></div></div>
+        <div class="panel"><div class="panel-head"><h4>Approvals · only the person decides</h4></div><div class="appr" id="appr" aria-live="polite"></div></div>
+      </div>
+      <div class="panel span2">
+        <div class="panel-head"><h4>Swimlanes · every element, every step</h4><span class="spacer"></span><span class="kbd-hint">Arrows run from sender to receiver; ◆ is a gate decision; ■ is a ledger write.</span></div>
+        <div class="lanes-wrap"><div class="lanes-labels" id="laneLabels"></div><div class="lanes-scroll" id="lanesScroll"><svg class="lanes-svg" id="lanesSvg" aria-label="Swimlane timeline of events"></svg></div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h4>Ledger · hash-chained, yours</h4><span class="spacer"></span><span class="kbd-hint" id="chainCount"></span></div>
+        <div class="chain" id="chain" aria-live="off"></div>
+        <div class="head-box" id="headBox" hidden></div>
+        <div class="chain-tools">
+          <button class="btn sm" id="verifyBtn">Verify chain</button>
+          <label class="kbd-hint">Tamper <select id="tamperSel" class="btn sm"><option value="edit">edit an entry</option><option value="delete">delete an entry</option><option value="reorder">swap two entries</option><option value="truncate">cut off the end</option></select></label>
+          <button class="btn sm ghost" id="tamperBtn">Try it</button>
+          <button class="btn sm ghost" id="restoreBtn" hidden>Restore</button>
+        </div>
+        <div class="verify-out" id="verifyOut" hidden></div>
+      </div>
+      <div class="side-stack">
+        <div class="panel"><div class="panel-head"><h4>Why · the selected step</h4></div><div class="why" id="why"></div></div>
+        <div class="panel"><div class="panel-head"><h4 id="spTitle">Scenario</h4><span class="spacer"></span><span id="spExtra"></span></div><div class="sp-body" id="sp"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TWO AGENTS ============ -->
+<section class="band" id="two-agents" aria-labelledby="two-title">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <span class="eyebrow">04 · Two agents, one owner <span class="sim-scope beyond" style="margin-left:8px">beyond v0.4 · design exploration</span></span>
+      <h2 class="fluid-h2" id="two-title">Two agents for Alex, <span class="display-em">one gate, one ledger</span>.</h2>
+      <p class="lede">v0.4 runs one agent at a time (CONCEPT-IDEA §6). Scenario S5 explores what changes when a travel agent and a calendar agent work for the same person at once. They show up as two agent lanes and two task boards, in their own colours, writing to the same ledger.</p>
+    </div>
+    <div class="rules6">
+      <div class="card"><span class="k">Rule 1</span><h3>No side channel</h3><p>Agents never talk to each other directly. A hand-off is a request to the gate, which checks the receiver's purpose and forwards only that. The run view checks that there are no agent-to-agent arrows.</p></div>
+      <div class="card"><span class="k">Rule 2</span><h3>Own mandate, own scope</h3><p>Each agent has its own mandate and tool scope. The calendar agent asks for the passport and is denied, without learning whether a passport exists.</p></div>
+      <div class="card"><span class="k">Rule 3</span><h3>One ledger, every entry tagged</h3><p>Both agents write to the person's one chain. Each entry names the agent it was for, so the ledger can be filtered per agent without becoming two histories.</p></div>
+      <div class="card"><span class="k">Rule 4</span><h3>Minimal hand-offs</h3><p>The travel agent publishes city and dates; the hotel and price stay behind. Colleagues see "busy", never where or why.</p></div>
+      <div class="card"><span class="k">Rule 5</span><h3>Stale plans are refused</h3><p>Every action carries the plan version it was built on. When travel changes the itinerary, the calendar's older proposal is refused and re-planned: same action id, new attempt.</p></div>
+      <div class="card"><span class="k">Rule 6</span><h3>One queue for the person</h3><p>Approvals from both agents land in one queue, grouped, so Alex decides once with the full picture, not twice in two apps.</p></div>
+    </div>
+    <div class="cta-inline"><a class="btn primary btn-sweep" href="?scenario=s5#run" id="watchS5">Watch S5 in the run view</a></div>
+  </div>
+</section>
+
+<!-- ============ TWO SIDES ============ -->
+<section class="band" id="two-sides" aria-labelledby="sides-title">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <span class="eyebrow">05 · Both sides</span>
+      <h2 class="fluid-h2" id="sides-title">Each agent runs <span class="display-em">its own simulation</span>.</h2>
+      <p class="lede">In S3 the tenant agent and the landlord agent each keep a private model: their own weights and limits, a concession curve, and a guess at what the other side wants. The two-sides screen puts both consoles at the table and lets you swap between them.</p>
+    </div>
+    <div class="cta-inline" style="justify-content:flex-start;gap:10px;flex-wrap:wrap"><a class="btn primary btn-sweep" href="negotiate.html">Open the two-sides screen</a><a class="btn" href="negotiate.html?view=landlord">Start on the landlord's side</a><a class="btn ghost" href="negotiate.html?fixture=lease-f-l2">The deal that can't happen (F-L2)</a></div>
+  </div>
+</section>
+</main>
+
+<footer data-shell="footer"></footer>
+</body>
+</html>

@@ -62,8 +62,6 @@
 
 | ID | Task | Ref | Why not now |
 | --- | --- | --- | --- |
-| T-030 | Vendor the Neocloud engine (`nego/*.js`, `lib/rng.js`) at `96a6161` with LICENSE and NOTICE | D-11 | M3 |
-| T-031 | Lease scenarios F-L1 (feasible) and F-L2 (infeasible); calibrate with the engine's `analyse` | FR-32, R-05 | M3 |
 | T-032 | Mandate form, rank-order centroid weights, sanity check, signing; replacement mandates; hard-ban rejection | FR-28, FR-30 | M3 |
 | T-033 | Route every offer through the gate; AI and mandate disclosure in messages; `decision.made` per concession | FR-29, FR-31 | M3 |
 | T-034 | Clause state machine | FR-33 | M3 |
@@ -108,6 +106,9 @@
 | T-092 | SPECIFICATION, PLAN and BACKLOG approved (with platform adapters) | Planning | 2026-11-26 | [#3](https://github.com/yorkerhodes3/agentic-ontology/pull/3) |
 | T-009 | Code scaffolding: `package.json` (no dependencies, Apache-2.0), `node:test`, CI on pull requests (done early with the site redesign) | infra | 2026-11-26 | [#4](https://github.com/yorkerhodes3/agentic-ontology/pull/4) |
 | T-093 | Site redesign: Neocloud design system with selectable style guides (CoLab default, MetaMask added), Neocloud-style top menu with platform switcher, title "Wayfinder - Agentic Ontology", favicon, social preview | US-17 | 2026-11-26 | [#4](https://github.com/yorkerhodes3/agentic-ontology/pull/4) |
+| T-030 | Vendor the Neocloud engine (`nego/*.js`, `lib/rng.js`) at `96a6161`, byte-identical, with its NOTICE (done early, for the site) | D-11 | 2026-11-26 | [#5](https://github.com/yorkerhodes3/agentic-ontology/pull/5) |
+| T-031 | Lease scenarios F-L1 (feasible) and F-L2 (infeasible), calibrated: F-L1 settles 77/80 inside the mandate, F-L2 0/80 (tests A-07, A-08) | FR-32, R-05 | 2026-11-26 | [#5](https://github.com/yorkerhodes3/agentic-ontology/pull/5) |
+| T-094 | Simulation dashboard (workload board, one-template run view, ledger verify and tamper, S5 two agents) and two-sides negotiation screen | US-21, FR-44, FR-45 | 2026-11-26 | [#5](https://github.com/yorkerhodes3/agentic-ontology/pull/5) |
 
 ---
 
