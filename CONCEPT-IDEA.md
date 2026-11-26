@@ -8,7 +8,7 @@
 
 | Field | Value |
 | --- | --- |
-| Status | `Approved` (v0.4). v0.4.1 changes dates only and is in review with the planning documents. |
+| Status | `Approved` (v0.4). v0.4.1 (dates and platform targets) approved with the planning documents on 2026-11-26. |
 | Version | v0.4.1 |
 | Author | @yorkerhodes3 |
 | Reviewer(s) | @yorkerhodes3 (approved 2026-11-25; see sign-off). AI critical review (guide prompt #5) on 2026-11-25; its findings are fixed in v0.4. |
@@ -23,7 +23,7 @@
 | v0.2 | 2026-11-25 | Added the personal ledger and four scenarios. S3 reuses the Neocloud negotiation room. ([PR #1](https://github.com/yorkerhodes3/agentic-ontology/pull/1)) |
 | v0.3 | 2026-11-25 | Approved by the reviewer. v0.4 is to be local and containerised, use local LLMs and decision models, and take no external dependencies, but not rule them out later. |
 | v0.4 | 2026-11-25 | Fixed 10 findings from the AI critical review (8 blocking). Recorded decisions on Q1–Q16 (§9). Froze v0.4 scope (§4.6, §6). Added one acceptance matrix (§5). |
-| v0.4.1 | 2026-11-25 | **Dates only; scope unchanged.** Bottom-up planning (PLAN §10) showed the Must scope needs 13 working weeks at ~12 h/week, so the demo moves from 2027-01-29 to 2027-03-05 and the A-17 usability check from 2027-02-12 to 2027-03-19. |
+| v0.4.1 | 2026-11-26 | **Dates and platform targets; acceptance matrix unchanged.** Bottom-up planning (PLAN §10) showed the Must scope needs 13 working weeks at ~12 h/week. The reviewer then asked for platform adapters (macOS, Windows, B3IQ, Mac Studio M5 Ultra; SPEC §9.1), which take it to 15 weeks. The demo moves from 2027-01-29 to 2027-03-19, and the A-17 usability check from 2027-02-12 to 2027-04-02. |
 
 > **How this document was made.** An AI assistant drafted it from the author's direction,
 > given in three rounds: the original idea; then the ledger, four scenarios and the
@@ -440,14 +440,14 @@ Its messages and quote PDF contain **ten attacks**:
 ## 5. What success looks like
 
 Targets were proposed by the AI and set as pragmatic v0.4 choices (decided v0.4). The
-v0.4 demo date is **2027-03-05** (Q1; moved from 2027-01-29 in v0.4.1).
+v0.4 demo date is **2027-03-19** (Q1; moved from 2027-01-29 in v0.4.1).
 
 | Signal | Measured by | Target | By when |
 | --- | --- | --- | --- |
-| **Facts are trustworthy** | A-01–A-03 | Precision ≥ 0.85, recall ≥ 0.60; no critical fact used unless confirmed and correct; planted malformed facts rejected | 2027-03-05 |
-| **Rules hold under pressure** | A-04, A-05, A-07–A-09, A-12, A-13 | No blocked disclosure in any run; no settlement outside the active mandate; hard bans never lifted | 2027-03-05 |
-| **Every step is on the ledger, and the ledger checks out** | A-14–A-16 | Complete; every tamper trial detected; fails closed | 2027-03-05 |
-| **People can see what was done for them** | A-17 | 3 people answer the five readout questions from the S3 readout | 2027-03-19 |
+| **Facts are trustworthy** | A-01–A-03 | Precision ≥ 0.85, recall ≥ 0.60; no critical fact used unless confirmed and correct; planted malformed facts rejected | 2027-03-19 |
+| **Rules hold under pressure** | A-04, A-05, A-07–A-09, A-12, A-13 | No blocked disclosure in any run; no settlement outside the active mandate; hard bans never lifted | 2027-03-19 |
+| **Every step is on the ledger, and the ledger checks out** | A-14–A-16 | Complete; every tamper trial detected; fails closed | 2027-03-19 |
+| **People can see what was done for them** | A-17 | 3 people answer the five readout questions from the S3 readout | 2027-04-02 |
 
 **Acceptance matrix (single source of truth; the specification references these IDs).**
 Fixtures:
@@ -507,10 +507,12 @@ Fixtures:
 
 ## 7. Constraints and realities
 
-- **Time (decided v0.4, Q1; dates amended in v0.4.1):** about 12 hours a week for 13
-  working weeks, from 2026-11-30 to 2027-03-05, with no work in the week of 2026-12-28.
-  That is about 156 hours: 91 hours of Must work plus a 50% buffer, with the remaining
-  slack covering reviews and interviews (PLAN §10).
+- **Time (decided v0.4, Q1; dates amended in v0.4.1):** about 12 hours a week for 15
+  working weeks, from 2026-11-30 to 2027-03-19, with no work in the week of 2026-12-28.
+  That is about 180 hours: 103 hours of Must work (including platform adapters) plus a
+  50% buffer, with the remaining slack covering reviews and interviews (PLAN §10).
+- **Platforms (v0.4.1, reviewer's request):** the same commands run on a Mac, a Windows
+  PC, a B3IQ bare-metal server and a Mac Studio M5 Ultra (SPEC §9.1, PLAN D-17).
 - **Money:** $0. Local containers and local models only.
 - **Hardware:** one machine running TrustGraph, a local LLM via Ollama, TrustGraph's
   decision models and the Wayfinder containers. **Whether the author's hardware runs this
@@ -552,7 +554,7 @@ names the signal that would change it.
 
 | # | Question | Decision for v0.4 | Revisit if |
 | --- | --- | --- | --- |
-| Q1 | Time and demo date | ~12 h/week for 13 working weeks; demo **2027-03-05**; usability check (A-17) by 2027-03-19 (v0.4.1; first estimate was 8 weeks and 2027-01-29) | The author's real hours differ; then cut using PLAN's cut list |
+| Q1 | Time and demo date | ~12 h/week for 15 working weeks; demo **2027-03-19**; usability check (A-17) by 2027-04-02 (v0.4.1; first estimate was 8 weeks and 2027-01-29) | The author's real hours differ; then cut using PLAN's cut list |
 | Q2 | Is the problem real for others? | Author writes up one concrete incident; 5 interviews by 2027-01-08; notes in `research/` with no personal data; not blocking | Fewer than 3 of 5 interviewees recognise the problem |
 | Q3 | Vocabulary | Reuse schema.org (Person, Event, Place, LodgingBusiness, Offer, Organization) and PROV-O; a small `wf:` namespace for the rest (Mandate, ConsentRule, Purpose, Claim, IdentityDocument, Lease, LeaseClause…); ≤ 15 classes | Extraction quality suffers from schema.org's breadth |
 | Q4 / Q5 | Do TrustGraph policies cover the agent and MCP paths? | Don't depend on it: the **gate is authoritative** for reads and actions. TrustGraph SHACL-AF policies are a second layer on graph reads. A 4-hour spike records what they cover. | The spike shows full coverage; then consider moving rules into SHACL |

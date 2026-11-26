@@ -9,11 +9,11 @@
 
 | Field | Value |
 | --- | --- |
-| Status | `In review` |
+| Status | `Approved` (2026-11-26, with platform adapters) |
 | Concept doc | [CONCEPT-IDEA.md](./CONCEPT-IDEA.md) (v0.4, approved 2026-11-25) |
 | Author | @yorkerhodes3 (drafted with an AI assistant, guide prompt #2) |
-| Reviewer(s) | Not yet assigned |
-| Version | 0.1.0 (targets release v0.4) |
+| Reviewer(s) | @yorkerhodes3 (approved 2026-11-26) |
+| Version | 0.2.0 (targets release v0.4) |
 | Last updated | 2026-11-25 |
 
 > **Acceptance IDs.** `A-xx` refers to the acceptance matrix in CONCEPT-IDEA §5, which is
@@ -30,7 +30,9 @@ Wayfinder is a personal AI agent that acts from a small ontology of its person's
 it).
 
 v0.4 runs entirely on one machine, in containers, with local LLMs and local decision
-models. It is tested by four synthetic scenarios:
+models. The same commands run on four **platform profiles** (§9.1): a Mac, a Windows PC,
+a B3IQ bare-metal server, and a top-specification Mac Studio (M5 Ultra). It is tested by
+four synthetic scenarios:
 
 - **S1:** travel booking;
 - **S2:** stale or conflicting outside information;
@@ -55,7 +57,7 @@ TrustGraph's own agent orchestrator to the gate is a stretch goal (US-19).
 3. After S3, the person can see clause by clause what their agent negotiated and how
    close each term came to their limits.
 4. The whole system starts on one machine from the README with local models only, and
-   no hosted services are required.
+   no hosted services are required, on each platform profile in §9.1.
 5. A scenario report and recorded synthetic runs are published on the project site.
 
 **Non-goals (explicitly not in v0.4):** everything in CONCEPT-IDEA §6. In particular:
@@ -101,6 +103,7 @@ TrustGraph's own agent orchestrator to the gate is a stretch goal (US-19).
 | US-17 | As a **site visitor**, I want to read the concept, the scenario report and recorded readouts, so that I can understand and assess the project. | Must |
 | US-18 | As the **person**, I want to see what the agent is doing now, including failures, retries and approvals waiting for me, so that nothing happens out of sight. | Must |
 | US-19 | As the **researcher**, I want TrustGraph's agent orchestrator to run S1 through the gate as its only tool server, so that the gate is shown to work with a general agent. | Could |
+| US-20 | As the **person**, I want to run Wayfinder with the same commands and the same guarantees on my Mac, my Windows PC, a B3IQ server or a Mac Studio M5 Ultra, so that I can use the hardware I have. | Must |
 
 ## 5. Functional requirements
 
@@ -208,6 +211,13 @@ Grouped by area. "Ledger entry" means an entry of the named type written by the 
 | FR-40 | The project site shall present the concept and, from M5, the scenario report and recorded synthetic runs with their readouts and instructions for verifying them. | US-17 | Given the site at M5, then each recorded run links its readout, ledger and head commitment. |
 | FR-41 | (Could) TrustGraph's agent orchestrator shall be configurable with the gate as its only MCP tool server and run S1. | US-19 | Given that configuration, when S1 runs, then every action appears in the ledger and A-04 still passes. |
 
+### 5.13 Platform adapters
+
+| ID | Requirement | Story | Acceptance criteria |
+| --- | --- | --- | --- |
+| FR-42 | The system shall ship one **platform profile** per row of §9.1. A profile states: the container runtime, where the LLM and decision models run, the GPU path, which sandbox layers apply, the model tier, and the host addresses and ports it binds. Only profile files differ between platforms; the gate, ledger, agent and harness are the same multi-architecture (amd64 and arm64) images and code. `wf up --platform <id>` selects a profile. | US-20 | Given each profile on its platform, when `wf up --platform <id>` and the test-mode harness run, then S3 and S4 pass. Their ledger files are byte-identical to those produced in CI (FR-38). |
+| FR-43 | `wf doctor` shall detect the platform and recommend a profile. It checks prerequisites: runtime and version, CPU architecture, memory, free disk, GPU, local models present, and that the profile's ports are free. With the stack running, it also runs FR-13's negative tests from a probe container on the sandbox network. It records the results, the active sandbox layers and the model tier in every run record. `wf up` **refuses to start a run** while any negative test reaches something other than the gate (fail closed). | US-20, US-11 | Given a profile where a backend port is deliberately published on the sandbox's reachable address, when `wf doctor` runs, then it reports the reachable target and `wf run` refuses to start. Given a clean stack, then the run record lists the platform, profile, sandbox layers and model tier. |
+
 ## 6. Screens / interface
 
 v0.4 has no app. The person uses a command-line tool (called `wf` here; the final name
@@ -217,7 +227,8 @@ is set in PLAN), generated readout pages, and the project site.
 
 | Command | Does |
 | --- | --- |
-| `wf up` / `wf down` | Start and stop the local stack |
+| `wf doctor` | Check the platform, recommend a profile, and prove the sandbox (FR-43) |
+| `wf up [--platform <id>]` / `wf down` | Start and stop the local stack with a platform profile (FR-42) |
 | `wf docs add <path>` | Add documents for extraction (FR-01) |
 | `wf facts [list\|confirm\|retract]` | See, confirm or retract beliefs (FR-03) |
 | `wf rules [list\|check]` | Show consent rules; dry-run a disclosure (FR-08) |
@@ -436,7 +447,30 @@ Targets are inferred, for review.
 | Cost | $0. Local containers and local models only. |
 | Availability | Best effort on one machine. The site is static on GitHub Pages. |
 | Reproducibility | Test mode is byte-for-byte reproducible (FR-38). Every model is pinned by tag and digest in the run record. |
-| Portability | Ledger as JSONL and PROV-O Turtle; knowledge exportable as Turtle (TrustGraph). Adapters allow hosted models, network counterparties, external identity and public anchoring later. |
+| Portability | Runs on every platform profile in §9.1 with identical test-mode ledgers (FR-42). Ledger as JSONL and PROV-O Turtle; knowledge exportable as Turtle (TrustGraph). Adapters allow hosted models, network counterparties, external identity and public anchoring later. |
+
+### 9.1 Platform profiles
+
+Facts marked *verified* were checked on 2026-11-26 against the cited source. The rest are
+design choices for review, or (inferred).
+
+| Profile | Hardware | Container runtime | LLM and decision models | GPU | Sandbox layers (PLAN D-04) | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| `macos` | Apple silicon Mac; 32 GB memory or more recommended (inferred) | Docker Desktop | Ollama **native app on the host** (Metal); decision models in containers (CPU; amd64 images run under Rosetta if no arm64 image exists) | Apple GPU, host only | 1 and 2; layer 3 is unavailable, so `wf doctor`'s negative tests are mandatory | Containers on macOS cannot use the Apple GPU (inferred), so the LLM runs on the host. Only the gate is meant to reach it, and `wf doctor` proves the agent cannot (FR-43). |
+| `mac-studio-m5-ultra` | Mac Studio, M5 Ultra with 36-core CPU and 80-core GPU, 512 GB unified memory, 16 TB SSD: Apple's top configuration (*verified*: [Apple newsroom, 2026-08-25](https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/) for the 512 GB memory and 1.2 TB/s bandwidth; [TechRepublic, 2026-10-30](https://www.techrepublic.com/article/news-apple-mac-studio-512gb-ram-price-specs/) for the 16 TB storage option and US$29,799 price) | As `macos` | As `macos`, with model tier `xl`: the extraction model and a drafting model stay loaded together, with the largest local models measured in T-002 | Apple GPU, host only | As `macos` | The default limit on how much unified memory the GPU may use can be raised (inferred; check on the machine and record the setting in the run record). |
+| `windows` | Windows 11 PC; NVIDIA GPU optional | **Recommended:** Docker Engine inside a WSL 2 Ubuntu 24.04 distribution. **Supported:** Docker Desktop with the WSL 2 backend. | Ollama in a container | NVIDIA through WSL 2 (CUDA), or CPU | Docker Engine in WSL 2: 1, 2 and 3. Docker Desktop: 1 and 2, plus mandatory doctor tests. | Same path the author's `bare-metal-jacket` documents for Windows evaluation hosts ([deployment testing][bmj-deploy]). The `wf` CLI runs inside WSL. |
+| `b3iq` | B3IQ bare-metal node: Ubuntu 24.04 with Docker Engine and Compose. The tested node has 60 GiB RAM and Ollama installed (*verified*: [bare-metal-jacket deployment testing][bmj-deploy]). NVIDIA GPU node classes are listed on [b3iq.org](https://b3iq.org/) (not verified here). | Docker Engine | Ollama **in a container** on the backend network, not the node's shared host Ollama; GPU through the NVIDIA Container Toolkit when the node has one | NVIDIA, or CPU | 1, 2 and 3 | Reached over SSH; the readout and site are viewed through an SSH tunnel. Every published port is bound to loopback, as bare-metal-jacket requires for B3IQ. Avoid ports already used on the node (e.g. 8799). Synthetic data only. Confirm B3IQ policy before installing anything on the host. |
+| `linux` | Any Linux host, amd64 or arm64 | Docker Engine | Ollama in a container | NVIDIA optional | 1, 2 and 3 | Used by CI in test mode (no models). |
+
+**Model tiers** (inferred; `wf doctor` picks one from GPU memory or unified memory, and
+T-002 confirms it by measurement):
+
+| Tier | Memory available to models | Use |
+| --- | --- | --- |
+| `s` | under 16 GB | Fixture mode likely; small model for drafting only |
+| `m` | 16–64 GB | One mid-size extraction model |
+| `l` | 64–192 GB | Larger extraction model; decision models alongside |
+| `xl` | 192 GB or more | Extraction and drafting models loaded together; largest models in the A-01 comparison |
 
 ## 10. External dependencies
 
@@ -445,9 +479,12 @@ All are local or used at install time. No hosted runtime services.
 | Service | Used for | Account needed | Cost | Fallback if unavailable |
 | --- | --- | --- | --- | --- |
 | GitHub (repo, Actions, Pages) | Source, CI, project site | yes | free | Run everything locally; publish later |
-| Docker (Compose) | Running the stack | no | free | Podman (supported by TrustGraph) |
+| Docker Engine + Compose (Linux, WSL 2, B3IQ) or Docker Desktop (macOS, Windows) | Running the stack | no (Docker Desktop's licence terms apply to larger organisations) | free for personal and education use | Podman (supported by TrustGraph) |
+| WSL 2 (Windows) | Linux environment for Docker Engine and the CLI | no | free | Docker Desktop alone |
+| NVIDIA driver and Container Toolkit (Linux, WSL 2, B3IQ) | GPU access for containerised Ollama | no | free | CPU, with a smaller model tier |
+| SSH access to a B3IQ node | Running on B3IQ | yes (B3IQ) | per B3IQ | Any other profile |
 | TrustGraph v2.11 containers | Knowledge store, OntologyRAG, policies, traces, decision-model services | no | free (Apache-2.0) | Fixture mode (FR-04) for beliefs; gate works without it for S3 and S4 |
-| Ollama + an open-weight model | Extraction and draft wording | no | free | A smaller model; then fixture mode |
+| Ollama + an open-weight model | Extraction and draft wording (native app with Metal on macOS; container elsewhere) | no | free | A smaller model; then fixture mode |
 | Laya decision scoring and Cloze (via TrustGraph) | Fast signals | no | free | Signals are `unknown`, so the agent asks the person (FR-18) |
 | Node.js runtime | Gate, harness, CLI, readouts | no | free | — |
 | Neocloud negotiation engine (vendored, Apache-2.0) | S3 bargaining | no | free | — |
@@ -461,32 +498,46 @@ All are local or used at install time. No hosted runtime services.
       contribute
 - [ ] No secrets or real personal data in the repository
 - [ ] The author can run S3 from the README on a fresh checkout without help
+- [ ] The platform matrix (FR-42) is published: each profile is `validated` with its date and run record, or `not validated` with the reason
 
 ## 12. Open questions carried forward
 
 | ID | Question | Owner | Needed by |
 | --- | --- | --- | --- |
-| OQ-01 | Does the full stack (TrustGraph, Ollama, decision models, Wayfinder) run on the author's hardware? Go/no-go for live extraction. | @yorkerhodes3 | 2026-12-11 (M1) |
-| OQ-02 | Which open-weight model gives the best A-01 within that hardware? | @yorkerhodes3 | 2026-12-11 (M1) |
-| OQ-03 | How is our ontology loaded into TrustGraph: its JSON ontology config, or a Turtle import? (Its spec describes both; unverified.) | @yorkerhodes3 | 2026-12-11 (M1) |
-| OQ-04 | What do TrustGraph's SHACL-AF policies and user context cover on the paths we use? (4-hour spike, a Should item; nothing depends on the answer.) | @yorkerhodes3 | 2027-02-26 (by M4) |
-| OQ-05 | Does a minimal MCP-over-HTTP subset in the gate work with the scenario agent and, for US-19, with TrustGraph's agent? | @yorkerhodes3 | 2027-01-22 (M2) |
+| OQ-01 | Does the full stack (TrustGraph, Ollama, decision models, Wayfinder) run on the author's hardware? Go/no-go for live extraction. | @yorkerhodes3 | 2026-12-18 (M1) |
+| OQ-02 | Which open-weight model gives the best A-01 within that hardware? | @yorkerhodes3 | 2026-12-18 (M1) |
+| OQ-03 | How is our ontology loaded into TrustGraph: its JSON ontology config, or a Turtle import? (Its spec describes both; unverified.) | @yorkerhodes3 | 2026-12-18 (M1) |
+| OQ-04 | What do TrustGraph's SHACL-AF policies and user context cover on the paths we use? (4-hour spike, a Should item; nothing depends on the answer.) | @yorkerhodes3 | 2027-03-05 (by M4) |
+| OQ-05 | Does a minimal MCP-over-HTTP subset in the gate work with the scenario agent and, for US-19, with TrustGraph's agent? | @yorkerhodes3 | 2027-01-29 (M2) |
 | OQ-06 | Interview findings (CONCEPT Q2). | @yorkerhodes3 | 2027-01-08 |
+| OQ-07 | Do TrustGraph's decision-model and other service images exist for arm64, or do they need Rosetta emulation on Apple silicon? | @yorkerhodes3 | 2026-12-18 (M1) |
+| OQ-08 | On Docker Desktop (macOS and Windows), can a container on an `internal` network reach `host.docker.internal`? (`wf doctor` answers this on each machine.) | @yorkerhodes3 | 2026-12-18 (M1) |
+| OQ-09 | Which B3IQ node class (GPU, memory) will Wayfinder use, and does B3IQ policy allow a dedicated Compose project with a GPU? | @yorkerhodes3 | 2027-03-05 (before M5) |
+| OQ-10 | Will a Mac Studio M5 Ultra be available to validate the `mac-studio-m5-ultra` profile by M5? If not, that profile ships as "not validated". | @yorkerhodes3 | 2027-03-05 (before M5) |
 
 ---
 
 ## Reviewer sign-off
 
-- [ ] Every `Must` story has at least one functional requirement
-- [ ] Every functional requirement has testable acceptance criteria
-- [ ] The data model covers everything the screens display
-- [ ] Empty states, error states, and edge cases are specified
-- [ ] Non-functional requirements are realistic for the time and budget available
-- [ ] Nothing here contradicts the approved `CONCEPT-IDEA.md`
-- [ ] Scope still fits the stated constraints; if not, say what gets cut
+- [x] Every `Must` story has at least one functional requirement
+- [x] Every functional requirement has testable acceptance criteria
+- [x] The data model covers everything the screens display
+- [x] Empty states, error states, and edge cases are specified
+- [x] Non-functional requirements are realistic for the time and budget available
+- [x] Nothing here contradicts the approved `CONCEPT-IDEA.md`
+- [x] Scope still fits the stated constraints; if not, say what gets cut
 
-**Verdict:** `Approved` / `Approved with changes` / `Needs rework`
+**Verdict:** `Approved with changes`
 
 **Reviewer notes:**
 
->
+> @yorkerhodes3, 2026-11-26: "Approve PR #3. This should have adapters to run on macOS, Windows, and the B3IQ server infrastructure and a Mac M5 with highest specs available"
+
+The boxes above were ticked by the AI assistant on the reviewer's instruction.
+
+**Author response (2026-11-26):** Added the requested platform adapters before merging:
+platform profiles for `macos`, `mac-studio-m5-ultra`, `windows`, `b3iq` and `linux`
+(SPEC §9.1, US-20, FR-42, FR-43; PLAN D-17), with platform-matrix tasks in M5. The
+schedule moves to 15 working weeks, with the demo on 2027-03-19 (CONCEPT-IDEA v0.4.1).
+
+[bmj-deploy]: https://github.com/yorkerhodes3/bare-metal-jacket/blob/8ac98575b8fa7ff17a926b361ff9ead678fabbe3/docs/operations/deployment-testing.md
