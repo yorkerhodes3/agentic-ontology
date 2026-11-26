@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en" data-ground="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wayfinder - Agentic Ontology</title>
+<meta name="description" content="Wayfinder is a personal AI agent that acts for you from facts you own and rules you set, and records every step in a personal ledger you keep. Built on TrustGraph; runs locally on macOS, Windows, B3IQ servers and Mac Studio M5 Ultra.">
+<link rel="canonical" href="https://yorkerhodes3.github.io/agentic-ontology/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Wayfinder - Agentic Ontology">
+<meta property="og:title" content="Wayfinder - Agentic Ontology">
+<meta property="og:description" content="A personal AI agent that acts from facts you own and rules you set, and keeps a step-by-step ledger of everything it did.">
+<meta property="og:url" content="https://yorkerhodes3.github.io/agentic-ontology/">
+<meta property="og:image" content="https://yorkerhodes3.github.io/agentic-ontology/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Wayfinder - Agentic Ontology: the project home page, showing the headline and an ontology graph.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wayfinder - Agentic Ontology">
+<meta name="twitter:description" content="A personal AI agent that acts from facts you own and rules you set, and keeps a step-by-step ledger of everything it did.">
+<meta name="twitter:image" content="https://yorkerhodes3.github.io/agentic-ontology/assets/og-image.png">
+<meta name="twitter:image:alt" content="Wayfinder - Agentic Ontology: the project home page, showing the headline and an ontology graph.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#120c1a">
+<script>try{var c=JSON.parse(localStorage.getItem('wf.vars')||'null'),q=new URLSearchParams(location.search).get('brand');if(c&&(!q||q===c.id)){var r=document.documentElement;r.dataset.ground=c.ground;for(var k in c.vars)r.style.setProperty(k,c.vars[k]);}}catch(e){}</script>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<script type="module" src="assets/js/pages/index.js"></script>
+</head>
+<body>
+<a href="#main" class="sr-only">Skip to content</a>
+<header data-shell="nav"></header>
+
+<main id="main">
+<!-- ============ HERO ============ -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="aura" aria-hidden="true"></div>
+  <svg class="onto" viewBox="0 0 600 500" role="img" aria-label="Diagram: a small ontology. Person attends an Event, is tenant of a Lease and holds a Passport. A dated Claim is about the Event. A Mandate governs the Lease. A Consent rule is checked by the Gate, and the Gate is the only way the agent reads the Person's facts.">
+    <path class="edge" d="M300 224 L100 64"/><path class="edge" d="M300 224 L500 64"/><path class="edge" d="M300 224 L110 434"/>
+    <path class="edge" d="M80 244 L100 64"/><path class="edge" d="M500 434 L500 64"/><path class="edge" d="M510 244 L300 454"/>
+    <path class="edge live" d="M300 454 L300 224"/>
+    <text class="elabel" x="168" y="134">attends</text><text class="elabel" x="404" y="134">tenantOf</text><text class="elabel" x="168" y="338">holds</text>
+    <text class="elabel" x="34" y="160">about</text><text class="elabel" x="508" y="330">governs</text><text class="elabel" x="404" y="356">checks</text><text class="elabel" x="308" y="344">reads via</text>
+    <g class="node"><rect x="20" y="40" width="160" height="48" rx="10"/><text x="34" y="61">Event</text><text class="sub" x="34" y="77">conference · dates</text></g>
+    <g class="node"><rect x="420" y="40" width="160" height="48" rx="10"/><text x="434" y="61">Lease</text><text class="sub" x="434" y="77">rent · term · critical</text></g>
+    <g class="node"><rect x="0" y="220" width="160" height="48" rx="10"/><text x="14" y="241">Claim</text><text class="sub" x="14" y="257">source · dated</text></g>
+    <g class="node core"><rect x="220" y="200" width="160" height="48" rx="10"/><text x="234" y="221">Person</text><text class="sub" x="234" y="237">synthetic persona</text></g>
+    <g class="node"><rect x="430" y="220" width="160" height="48" rx="10"/><text x="444" y="241">ConsentRule</text><text class="sub" x="444" y="257">bank statements: never</text></g>
+    <g class="node"><rect x="30" y="410" width="160" height="48" rx="10"/><text x="44" y="431">Passport</text><text class="sub" x="44" y="447">expiry · critical</text></g>
+    <g class="node gate"><rect x="220" y="430" width="160" height="48" rx="10"/><text x="234" y="451">Gate</text><text class="sub" x="234" y="467">ledger before action</text></g>
+    <g class="node"><rect x="420" y="410" width="160" height="48" rx="10"/><text x="434" y="431">Mandate</text><text class="sub" x="434" y="447">signed · rent ≤ $1,950</text></g>
+  </svg>
+  <div class="veil" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="eyebrow reveal">Wayfinder · Agentic Ontology</span>
+    <h1 id="hero-title" class="fluid-hero reveal d1">Your agent.<span class="l2">Your rules.</span></h1>
+    <p class="lede reveal d2"><b>Wayfinder</b> is a personal AI agent that acts for you from <b>facts you own</b> and <b>rules you set</b>, and records every step in a <b>ledger you keep</b>. A small ontology decides what it may believe, reveal and do; the ledger shows what it did and why.</p>
+    <div class="cta reveal d3">
+      <a class="btn primary btn-sweep" href="https://github.com/yorkerhodes3/agentic-ontology/blob/main/CONCEPT-IDEA.md">Read the concept →</a>
+      <a class="btn" href="#negotiate">What did my agent negotiate?</a>
+      <a class="btn ghost" href="#platforms">How it runs</a>
+    </div>
+    <div class="statstrip reveal">
+      <div class="stat"><b>4</b><span>jobs for one ontology</span></div>
+      <div class="stat"><b>4</b><span>test scenarios</span></div>
+      <div class="stat"><b>18</b><span>acceptance checks</span></div>
+      <div class="stat"><b>5</b><span>platform profiles</span></div>
+      <div class="stat"><b>0</b><span>hosted services</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROBLEM ============ -->
+<section class="band" id="problem" aria-labelledby="problem-title">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">01 · The problem</span>
+      <h2 id="problem-title" class="fluid-h2">Agents now run errands. <span class="display-em">Nobody can check them.</span></h2>
+      <p class="lede">Personal AI agents are moving from answering questions to booking, buying and negotiating with other agents. As far as we can tell from how mainstream assistants work today:</p>
+    </div>
+    <div class="grid g4">
+      <article class="card card-glow pain reveal"><span class="n">01</span><h3>Knowledge is loose text</h3><p>Chat history and notes cannot tell a checked fact from a guess, or notice when a fact has gone stale.</p></article>
+      <article class="card card-glow pain reveal d1"><span class="n">02</span><h3>Rules are all-or-nothing</h3><p>A tool is on or off. You cannot say "never share my bank statements" or "never agree for me".</p></article>
+      <article class="card card-glow pain reveal d2"><span class="n">03</span><h3>No record of why</h3><p>After a negotiation: what did it give up, how close did it come to my limits, and why did it accept?</p></article>
+      <article class="card card-glow pain reveal d3"><span class="n">04</span><h3>The vendor owns the memory</h3><p>You cannot easily inspect, correct, export or move it.</p></article>
+    </div>
+    <p class="small muted" style="margin-top:18px">Evidence that others have this problem has not been gathered yet. Five interviews are planned before 2027-01-08.</p>
+  </div>
+</section>
+
+<!-- ============ IDEA ============ -->
+<section class="band" id="idea" aria-labelledby="idea-title">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">02 · The idea</span>
+      <h2 id="idea-title" class="fluid-h2">One small ontology. <span class="display-em">Four jobs.</span></h2>
+      <p class="lede">An <em>ontology</em> here is a short, written-down list of the kinds of things in a person's world (an event, a lease, a passport) and how they may relate. It acts as a contract for the agent. Each job builds on <a class="inline" href="https://github.com/trustgraph-ai/trustgraph">TrustGraph</a>, used unmodified.</p>
+    </div>
+    <div class="pillars reveal">
+      <div><span class="ico" aria-hidden="true"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6.5 10.2l2.4 2.3 4.6-4.8" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span><h3>What it may believe</h3><p>Facts from your documents must fit the model. Critical facts such as dates and amounts are used only after you confirm them.</p><span class="tg">OntologyRAG · domain, range, subclass checks</span></div>
+      <div><span class="ico" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 2.5 16 5v4.6c0 3.6-2.5 6.4-6 7.9-3.5-1.5-6-4.3-6-7.9V5Z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span><h3>What it may reveal</h3><p>Consent rules are written against types: "financial records: never"; "income letter: may be shared for a lease".</p><span class="tg">Gate · SHACL-AF policies as a second layer</span></div>
+      <div><span class="ico" aria-hidden="true"><svg viewBox="0 0 20 20"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 9h6M7 12h4" stroke="currentColor" stroke-width="1.6"/></svg></span><h3>What it may do</h3><p>The agent chooses from a fixed set of options. It can draft and propose, but cannot pay or agree. Only you mark a clause agreed.</p><span class="tg">Constrained decisions · signed mandates</span></div>
+      <div><span class="ico" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 15V5m0 10h12M7 12l3-3 2 2 4-5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span><h3>Why it did it</h3><p>Every answer links to the facts it used and the source of each one, through the personal ledger.</p><span class="tg">PROV-O lineage · personal ledger</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEDGER ============ -->
+<section class="band" id="ledger" aria-labelledby="ledger-title">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">03 · The personal ledger</span>
+      <h2 id="ledger-title" class="fluid-h2">Written first. <span class="display-em">Kept by you.</span></h2>
+      <p class="lede">Every step the agent takes is written, in order, to a ledger you keep. A single <em>gate</em> writes each entry <b>before</b> the action happens. If the write fails, nothing happens.</p>
+    </div>
+    <div class="grid g3">
+      <article class="card reveal"><span class="k">Provenance</span><h3>Where did this come from?</h3><p class="small muted">Each fact and claim, with its source and a content hash.</p></article>
+      <article class="card reveal d1"><span class="k">Explicability</span><h3>Why did it do that?</h3><p class="small muted">The options it had, the rule that narrowed them, and the signal that picked one.</p></article>
+      <article class="card reveal d2"><span class="k">Observability</span><h3>What is it doing now?</h3><p class="small muted">Status, timings, models used, errors, denials, and approvals waiting for you.</p></article>
+    </div>
+    <div class="ledger-grid">
+      <figure style="margin:0">
+<pre class="code" aria-label="Illustrative ledger entry"><code>{
+  <span class="k">"seq"</span>: 42,
+  <span class="k">"type"</span>: "disclosure.made",
+  <span class="k">"actor"</span>: "agent",
+  <span class="k">"ruleRefs"</span>: ["consent:income-letter-for-lease"],
+  <span class="k">"mandateRef"</span>: "lease-renewal v1 (expires in 14 days)",
+  <span class="k">"evidence"</span>: [{ "ref": "doc:income-letter", "sha256": "9f2c…" }],
+  <span class="k">"actionId"</span>: "act-0017", <span class="k">"attemptId"</span>: "att-0017-1",
+  <span class="k">"prevHash"</span>: "sha256:51ab…",
+  <span class="k">"signature"</span>: "ed25519:…"
+}</code></pre>
+        <figcaption class="small muted" style="margin-top:8px">Illustrative; the format is defined in SPECIFICATION §7.3.</figcaption>
+      </figure>
+      <div class="panel">
+        <div class="panel-head"><h4>What the integrity claim covers</h4></div>
+        <div class="panel-body">
+          <p class="small" style="margin:0"><b>Claimed:</b> against a sealed run's head commitment, kept separately, the ledger shows whether any entry, or any evidence it hashes, was later changed, inserted, deleted, reordered, cut off the end, or rolled back.</p>
+          <p class="small" style="margin:12px 0 0"><b>Not claimed:</b></p>
+          <ul class="claim-list no"><li>that an entry is true;</li><li>that nothing was left out before it was written;</li><li>that timestamps are exact.</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLATFORMS ============ -->
+<section class="band" id="platforms" aria-labelledby="platforms-title">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">04 · How it runs</span>
+      <h2 id="platforms-title" class="fluid-h2">Local, containerised, <span class="display-em">on your hardware.</span></h2>
+      <p class="lede">Everything runs on one machine, in containers, with local models and no hosted services. The same commands run on five platform profiles; only configuration differs. Each outside connection sits behind an adapter, so hosted models or network agents can be added later.</p>
+    </div>
+    <div class="plat-layout">
+      <figure class="diagram reveal" aria-labelledby="diagram-cap" style="margin:0">
+        <div class="sandbox">
+          <p class="zone">Sandbox network · no internet</p>
+          <div class="row"><div class="node">Agent<small>scenario agent</small></div><div class="arrow" aria-hidden="true">→</div><div class="node strong">Gate<small>MCP · rules · ledger</small></div></div>
+        </div>
+        <p class="down"><span aria-hidden="true">↓</span> only the gate can reach these</p>
+        <ul class="row services">
+          <li class="node">TrustGraph<small>knowledge, policies, traces</small></li>
+          <li class="node" id="llmNode">Local LLM<small data-llm-where>Ollama</small></li>
+          <li class="node">Decision models<small>fast signals</small></li>
+          <li class="node">Ledger writer<small>signed JSONL</small></li>
+        </ul>
+        <figcaption id="diagram-cap" class="small muted">The agent can reach only the gate, so the "no side door" rule is enforced by the network. <span data-diagram-note></span></figcaption>
+      </figure>
+      <div class="panel plat-detail reveal d1" aria-live="polite">
+        <div class="panel-head"><h4>Platform profile</h4><span class="spacer"></span><span class="badge warn" id="platStatus">planned</span></div>
+        <div class="panel-body">
+          <div class="plat-switch seg" role="group" aria-label="Choose a platform profile" id="platSwitch"></div>
+          <dl id="platDl"></dl>
+        </div>
+      </div>
+    </div>
+    <div class="table-wrap reveal" style="margin-top:22px">
+      <table class="t matrix" id="platMatrix">
+        <caption class="sr-only">Platform matrix</caption>
+        <thead><tr><th scope="col">Profile</th><th scope="col">Runtime</th><th scope="col">LLM</th><th scope="col">GPU</th><th scope="col">Sandbox layers</th><th scope="col">Status</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCENARIOS ============ -->
+<section class="band" id="scenarios" aria-labelledby="scenarios-title">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">05 · Four scenarios</span>
+      <h2 id="scenarios-title" class="fluid-h2">Tested on synthetic lives. <span class="display-em">Pass rules fixed first.</span></h2>
+      <p class="lede">One made-up persona, made-up counterparties and saved web pages. Every run writes a ledger; every pass rule is an acceptance ID in the concept (A-01 to A-18).</p>
+    </div>
+    <div class="scn-grid">
+      <article class="card mscn reveal"><div class="mscn-top"><span class="num">S1</span><span class="badge ok">Must</span></div><h3>Get me to the conference</h3><p class="small muted">Typed, confirmed facts → purpose-bound sharing → a booking drafted but not paid → "why this hotel?"</p></article>
+      <article class="card mscn reveal d1"><div class="mscn-top"><span class="num">S2</span><span class="badge warn">Should</span></div><h3>The world changed</h3><p class="small muted">Two dated snapshots disagree on the venue, and a passport-validity rule breaks the plan. The agent must stop and ask.</p></article>
+      <article class="card mscn reveal d2"><div class="mscn-top"><span class="num">S3</span><span class="badge ok">Must</span></div><h3>Lease renewal, agent to agent</h3><p class="small muted">Six issues negotiated inside a signed mandate. Only the person can agree. Bank statements: never.</p></article>
+      <article class="card mscn reveal"><div class="mscn-top"><span class="num">S4</span><span class="badge ok">Must</span></div><h3>The hostile counterparty</h3><p class="small muted">Ten attacks, three hidden inside valid fields. No blocked disclosure; each attempt is recorded.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEGOTIATION ============ -->
+<section class="band" id="negotiate" aria-labelledby="negotiate-title">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">06 · What did my agent negotiate?</span>
+      <h2 id="negotiate-title" class="fluid-h2">"Inside the mandate" <span class="display-em">is not the whole story.</span></h2>
+      <p class="lede">A real run of the <a class="inline" href="https://github.com/yorkerhodes3/neocloud-supply-os">Neocloud Supply OS</a> negotiation room, which S3 reuses. It is a GPU-rack purchase, not the lease: seed 42, counterpart Boulware, ours linear, 6 rounds, engine commit <code>f973c50</code>.</p>
+    </div>
+    <div class="table-wrap reveal">
+      <table class="t">
+        <caption class="sr-only">Final package versus the mandate</caption>
+        <thead><tr><th scope="col">Issue</th><th scope="col">Agreed</th><th scope="col">Mandate limit</th><th scope="col">How close to the limit</th></tr></thead>
+        <tbody>
+          <tr><td>Unit price</td><td class="mono">$3,250k / rack</td><td class="mono">≤ $3,255k</td><td><span class="tag tight">Tight</span>$5k under the cap</td></tr>
+          <tr><td>Warranty</td><td class="mono">24 months</td><td class="mono">≥ 24 months</td><td><span class="tag tight">Tight</span>At the floor</td></tr>
+          <tr><td>Prepayment</td><td class="mono">10%</td><td class="mono">≤ 30%</td><td><span class="tag room">Room</span>20 points under the cap</td></tr>
+          <tr><td>Delivery</td><td class="mono">Week 20</td><td class="mono">not capped</td><td><span class="tag tight">Worst</span>Latest delivery on the table</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="counts reveal">
+      <div class="stat"><b>7</b><span>of 20 seeded trials settled</span></div>
+      <div class="stat"><b>13</b><span>escalated to a human</span></div>
+      <div class="stat"><b>0</b><span>walked away</span></div>
+    </div>
+    <p class="small muted" style="margin-top:16px">In S3, Wayfinder turns this kind of evidence into a clause-by-clause readout. Every concession links to the ledger entry that explains it, and the landlord's copy never shows your limits.</p>
+  </div>
+</section>
+
+<!-- ============ ROADMAP ============ -->
+<section class="band" id="roadmap" aria-labelledby="roadmap-title">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">07 · Roadmap to v0.4</span>
+      <h2 id="roadmap-title" class="fluid-h2">Riskiest first. <span class="display-em">Then the spine.</span></h2>
+      <p class="lede">From the approved plan: about 12 hours a week over 15 working weeks, with no work in the week of 2026-12-28.</p>
+    </div>
+    <ol class="pipeline six">
+      <li class="step done reveal"><span class="dot">✓</span><div><span class="k">M0 · done</span><h3>Walking skeleton</h3><p>This site, the concept and the plan, approved.</p><span class="when">2026-11-25</span></div></li>
+      <li class="step now reveal d1"><span class="dot">1</span><div><span class="k">M1 · now</span><h3>Local stack go/no-go</h3><p><code>wf doctor</code>, platform profiles, TrustGraph and local models; first extraction score.</p><span class="when">2026-12-18</span></div></li>
+      <li class="step reveal d2"><span class="dot">2</span><div><span class="k">M2</span><h3>Gate and ledger</h3><p>Sandboxed agent, tamper and fail-closed tests, S4.</p><span class="when">2027-01-29</span></div></li>
+      <li class="step reveal"><span class="dot">3</span><div><span class="k">M3</span><h3>Negotiation</h3><p>S3: signed mandate, clauses, readout, seat view; 160 runs.</p><span class="when">2027-02-19</span></div></li>
+      <li class="step reveal d1"><span class="dot">4</span><div><span class="k">M4</span><h3>Belief and consent</h3><p>S1 end to end; S2 and the baseline if time allows.</p><span class="when">2027-03-05</span></div></li>
+      <li class="step reveal d2"><span class="dot">5</span><div><span class="k">M5</span><h3>v0.4 release</h3><p>Platform matrix, report, recorded runs and readouts.</p><span class="when">2027-03-19</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ DOCUMENTS ============ -->
+<section class="band" id="documents" aria-labelledby="documents-title">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">08 · Documents</span>
+      <h2 id="documents-title" class="fluid-h2">Think in documents. <span class="display-em">Review. Then build.</span></h2>
+      <p class="lede">The project follows the Ethical Tech CoLab <a class="inline" href="https://github.com/Ethical-Tech-CoLab/project-startup-guide">project startup guide</a>. The concept, specification and plan are approved; the backlog is active.</p>
+    </div>
+    <div class="grid g4">
+      <a class="card card-glow hover doc-card reveal" href="https://github.com/yorkerhodes3/agentic-ontology/blob/main/CONCEPT-IDEA.md"><span class="badge ok">approved · v0.4.1</span><h3>Concept</h3><p>Why it should exist, the four scenarios, the acceptance matrix and the v0.4 decisions.</p><span class="go">Read →</span></a>
+      <a class="card card-glow hover doc-card reveal d1" href="https://github.com/yorkerhodes3/agentic-ontology/blob/main/SPECIFICATION.md"><span class="badge ok">approved</span><h3>Specification</h3><p>20 user stories, 43 functional requirements and the platform profiles.</p><span class="go">Read →</span></a>
+      <a class="card card-glow hover doc-card reveal d2" href="https://github.com/yorkerhodes3/agentic-ontology/blob/main/PLAN.md"><span class="badge ok">approved</span><h3>Plan</h3><p>17 technical decisions, milestones, risks, effort and the cut list.</p><span class="go">Read →</span></a>
+      <a class="card card-glow hover doc-card reveal d3" href="https://github.com/yorkerhodes3/agentic-ontology/blob/main/BACKLOG.md"><span class="badge info">active · M1</span><h3>Backlog</h3><p>The next tasks, with hours and acceptance criteria.</p><span class="go">Read →</span></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer data-shell="footer"></footer>
+</body>
+</html>
