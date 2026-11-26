@@ -4,19 +4,22 @@
 typed model of their world (an *ontology*) and writes every step it takes to a personal
 ledger, so the person can see what it believed, what it shared, what it did and why.
 
-> **Status: concept approved (v0.4); planning in review.** Nothing is built yet.
-> **Site:** https://yorkerhodes3.github.io/agentic-ontology/ The project follows the
-> [Ethical Tech CoLab project startup guide](https://github.com/Ethical-Tech-CoLab/project-startup-guide):
-> *think in documents, review with a human, then build.*
+> **Status: concept and plan approved; building milestone M1.** Nothing runnable yet.
+>
+> **Site:** https://yorkerhodes3.github.io/agentic-ontology/
+
+The project follows the
+[Ethical Tech CoLab project startup guide](https://github.com/Ethical-Tech-CoLab/project-startup-guide):
+*think in documents, review with a human, then build.*
 
 ## Documents
 
 | Document | Answers | Status |
 | --- | --- | --- |
-| `CONCEPT-IDEA.md` | Why should this exist, and for whom? | **Approved** (v0.4, 2026-11-25) |
-| `SPECIFICATION.md` | What exactly does it do? | Draft, in review (see open pull requests) |
-| `PLAN.md` | How is it built, in what order? | Draft, in review |
-| `BACKLOG.md` | What is the very next task? | Draft, in review |
+| [`CONCEPT-IDEA.md`](CONCEPT-IDEA.md) | Why should this exist, and for whom? | **Approved** (v0.4, 2026-11-25) |
+| [`SPECIFICATION.md`](SPECIFICATION.md) | What exactly does it do? | **Approved** (2026-11-26) |
+| [`PLAN.md`](PLAN.md) | How is it built, in what order? | **Approved** (2026-11-26) |
+| [`BACKLOG.md`](BACKLOG.md) | What is the very next task? | Active (M1) |
 
 Blank templates for every stage, plus the reviewer's checklist, are in
 [`templates/`](templates/). They are copied unchanged from the startup guide.
