@@ -55,7 +55,6 @@
 | T-021 | S4 fixtures: 10 attacks (3 inside valid fields), permitted Quote disclosures, a trusted-list change mid-run; attack outcomes and the person's summary; harness checks A-12 and A-13 | FR-21, A-12, A-13 | M (3 h) | |
 | T-022 | Scenario agent with adversarial mode | D-15 | M (3 h) | |
 | T-023 | `wf status` | FR-27, US-18 | S (1 h) | |
-| T-009 | Code scaffolding: `package.json` (no dependencies, Apache-2.0), `node:test`, CI running `npm test` on pull requests | infra, D-02, D-14 | S (1 h) | Was in Now; moved to keep M1 inside two weeks |
 | T-007 | Decision-model smoke test through TrustGraph (choice, score, yes/no); p95 latency; stopped service maps to `unknown` | FR-18, D-10 | S (1 h) | Moved from M1 |
 | T-026 | Gate-side ontology validator (datatype, domain, range) as a second check after TrustGraph's | FR-02, A-03 | M (2 h) | |
 
@@ -107,6 +106,8 @@
 | T-090 | Apache-2.0 licence; project site deployed to GitHub Pages | M0 | 2026-11-25 | [#2](https://github.com/yorkerhodes3/agentic-ontology/pull/2) |
 | T-091 | Neocloud Supply OS and DTSF licensed Apache-2.0 (enables D-11 reuse) | CONCEPT Q14 | 2026-11-25 | Direct commits `96a6161` (Neocloud) and `725db57` (DTSF) |
 | T-092 | SPECIFICATION, PLAN and BACKLOG approved (with platform adapters) | Planning | 2026-11-26 | [#3](https://github.com/yorkerhodes3/agentic-ontology/pull/3) |
+| T-009 | Code scaffolding: `package.json` (no dependencies, Apache-2.0), `node:test`, CI on pull requests (done early with the site redesign) | infra | 2026-11-26 | [#4](https://github.com/yorkerhodes3/agentic-ontology/pull/4) |
+| T-093 | Site redesign: Neocloud design system with selectable style guides (CoLab default, MetaMask added), Neocloud-style top menu with platform switcher, title "Wayfinder - Agentic Ontology", favicon, social preview | US-17 | 2026-11-26 | [#4](https://github.com/yorkerhodes3/agentic-ontology/pull/4) |
 
 ---
 

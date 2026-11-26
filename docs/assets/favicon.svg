@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Wayfinder - Agentic Ontology</title>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c8f04b"/><stop offset="1" stop-color="#7b5cff"/></linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#120c1a"/>
+  <circle cx="32" cy="32" r="20.5" fill="none" stroke="url(#g)" stroke-width="3.6"/>
+  <g transform="rotate(38 32 32)">
+    <path d="M32 13.5 37.6 32H26.4Z" fill="#c8f04b"/>
+    <path d="M26.4 32H37.6L32 50.5Z" fill="#f3eefb" opacity=".78"/>
+  </g>
+  <circle cx="32" cy="32" r="2.8" fill="#120c1a"/>
+  <circle cx="14.2" cy="21.7" r="4.3" fill="#7b5cff"/>
+  <circle cx="49.8" cy="21.7" r="4.3" fill="#7b5cff"/>
+  <circle cx="32" cy="52.6" r="4.3" fill="#7b5cff"/>
+</svg>

@@ -1,0 +1,13 @@
+{
+  "name": "agentic-ontology",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Wayfinder - Agentic Ontology: an ontology-grounded personal agent with a personal ledger.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "serve": "python3 -m http.server 8765 --bind 127.0.0.1 --directory docs"
+  }
+}
