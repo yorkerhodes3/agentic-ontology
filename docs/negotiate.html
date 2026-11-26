@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" data-ground="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Both sides · Negotiation · Wayfinder - Agentic Ontology</title>
+<meta name="description" content="Two AI agents negotiate a lease renewal, each with its own private simulation: weights, walk-away point, concession curve and a guess at what the other side wants. Swap between the tenant's and the landlord's side, or watch both.">
+<link rel="canonical" href="https://yorkerhodes3.github.io/agentic-ontology/negotiate.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Wayfinder - Agentic Ontology">
+<meta property="og:title" content="Both sides of the table · Wayfinder - Agentic Ontology">
+<meta property="og:description" content="Two agents, two private simulations, one table. Swap sides and see what each agent knew, guessed and agreed.">
+<meta property="og:url" content="https://yorkerhodes3.github.io/agentic-ontology/negotiate.html">
+<meta property="og:image" content="https://yorkerhodes3.github.io/agentic-ontology/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Wayfinder - Agentic Ontology: the project home page, showing the headline and an ontology graph.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yorkerhodes3.github.io/agentic-ontology/assets/og-image.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#120c1a">
+<script>try{var c=JSON.parse(localStorage.getItem('wf.vars')||'null'),q=new URLSearchParams(location.search).get('brand');if(c&&(!q||q===c.id)){var r=document.documentElement;r.dataset.ground=c.ground;for(var k in c.vars)r.style.setProperty(k,c.vars[k]);}}catch(e){}</script>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/sim.css">
+<script type="module" src="assets/js/pages/negotiate.js"></script>
+</head>
+<body>
+<a href="#main" class="sr-only">Skip to content</a>
+<header data-shell="nav"></header>
+
+<main id="main" class="n2-root">
+<section class="page-hero">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="eyebrow">S3 · Both sides of the table</span>
+    <h1 class="fluid-h1">Two agents. <span class="display-em">Two private simulations.</span></h1>
+    <p class="lede">Alex's tenant agent and Harbor Lettings' landlord agent each run their own model of the negotiation: their own weights and walk-away point, a concession curve, and a running guess at what the other side wants. Only offers cross the table. Watch from one side, swap to the other, or see both at once.</p>
+    <div class="row wrap-row" style="gap:10px">
+      <a class="btn primary btn-sweep" href="#table">Take a seat</a>
+      <a class="btn" href="#readout">What did my agent negotiate?</a>
+      <a class="btn ghost" href="simulate.html?scenario=s3#run">Replay in the dashboard →</a>
+    </div>
+    <div class="notice"><b>Real engine, synthetic parties.</b> Offers, concessions and guesses are computed live by the vendored Neocloud Supply OS negotiation engine (Apache-2.0, unmodified) on Wayfinder's lease fixtures. Both parties are synthetic and no LLM runs. The same fixture, seed and styles always give the same negotiation. Only Alex can agree clauses; the agent proposes.</div>
+  </div>
+</section>
+
+<section class="band" id="table" aria-labelledby="table-title" style="padding-top:48px">
+  <div class="wrap-wide">
+    <h2 class="sr-only" id="table-title">The negotiation table</h2>
+    <div class="n2-bar" role="toolbar" aria-label="Negotiation controls">
+      <div class="seg" id="viewSeg" role="group" aria-label="View as"><button data-view="us" aria-pressed="true">Tenant's side</button><button data-view="both" aria-pressed="false">Both</button><button data-view="them" aria-pressed="false">Landlord's side</button></div>
+      <button class="btn sm swap-btn" id="swapBtn" title="Swap sides"><span class="ar">⇄</span> Swap sides</button>
+      <span class="sep" aria-hidden="true"></span>
+      <button class="btn sm primary" id="nPlay" aria-label="Play">▶ Play</button>
+      <button class="btn sm" id="nStep">Step ›</button>
+      <button class="btn sm ghost" id="nRestart" title="Back to the start">↺</button>
+      <div class="seg" id="nSpeed" role="group" aria-label="Speed"><button data-speed="0.5" aria-pressed="false">½×</button><button data-speed="1" aria-pressed="true">1×</button><button data-speed="2" aria-pressed="false">2×</button></div>
+      <span class="sep" aria-hidden="true"></span>
+      <label>Fixture <select id="nFix"></select></label>
+      <label>Landlord <select id="nStyle"></select></label>
+      <label>Tenant <select id="nOurs"></select></label>
+      <label>Seed <input type="number" id="nSeed" min="0" max="99999" value="42"></label>
+    </div>
+    <div class="n2" id="n2">
+      <div class="seat" id="seatL"></div>
+      <div class="table-c" id="tableC"></div>
+      <div class="seat" id="seatR"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="operator" aria-labelledby="op-title">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <span class="eyebrow">Operator view · neither agent sees this</span>
+      <h2 class="fluid-h2" id="op-title">Every possible deal, <span class="display-em">both walk-away points</span>.</h2>
+      <p class="lede">Each dot is one complete package of the six issues, placed by its value to Alex (across) and to the landlord (up). The agents only ever see their own axis and their guesses about the other one.</p>
+    </div>
+    <div class="op-grid">
+      <div class="panel" id="opPanel"></div>
+      <div class="panel">
+        <div class="panel-head"><h4>Who knows what</h4></div>
+        <div class="table-wrap" style="border:0;border-radius:0"><table class="t compact" id="knows"></table></div>
+        <div class="persp" id="persp"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="readout" aria-labelledby="ro-title">
+  <div class="wrap-wide">
+    <div class="section-head">
+      <span class="eyebrow" id="roEyebrow">The readout</span>
+      <h2 class="fluid-h2" id="ro-title">What did my agent <span class="display-em">negotiate?</span></h2>
+      <p class="lede" id="roLede"></p>
+    </div>
+    <div id="ro"></div>
+  </div>
+</section>
+</main>
+
+<footer data-shell="footer"></footer>
+</body>
+</html>
