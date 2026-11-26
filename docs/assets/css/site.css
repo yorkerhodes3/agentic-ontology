@@ -1,0 +1,116 @@
+/* Wayfinder landing page (index.html). Tokens only — see base.css. Hero, statstrip,
+   pain and pillar patterns are ported from Neocloud Supply OS (Apache-2.0). */
+
+/* ---------- Hero ---------- */
+.hero { position: relative; min-height: min(860px, 100svh); display: grid; align-items: center; overflow: hidden; padding: 64px 0 40px; }
+.hero .grid-bg { position: absolute; inset: 0; z-index: 0; }
+.hero .aura { z-index: 0; }
+.hero .veil { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(70% 70% at 22% 50%, color-mix(in oklab, var(--bg) 90%, transparent) 0%, color-mix(in oklab, var(--bg) 45%, transparent) 55%, transparent 80%),
+              linear-gradient(to bottom, transparent 72%, var(--bg)); }
+.hero .wrap { position: relative; z-index: 2; }
+.hero h1 { margin: 20px 0 22px; max-width: 12ch; }
+.hero h1 .l2 { display: block; color: var(--accent); }
+.hero .lede { font-size: clamp(1rem, 1.5vw, 1.18rem); max-width: min(50ch, 100%); }
+@media (min-width: 1101px) { .hero .lede, .hero .cta { max-width: min(50ch, calc(100vw - 720px)); } }
+.hero .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.hero .onto { position: absolute; z-index: 1; right: max(2vw, calc((100vw - 1180px) / 2 - 30px)); top: 50%; transform: translateY(-56%); width: min(40vw, 540px); height: auto; opacity: .95; pointer-events: none; }
+@media (max-width: 1100px) { .hero .onto { opacity: .28; width: 80vw; right: -20vw; } }
+@media (max-width: 640px) { .hero .onto { display: none; } }
+
+.onto .edge { stroke: color-mix(in oklab, var(--glow) 55%, transparent); stroke-width: 1.4; fill: none; stroke-dasharray: 4 6; animation: flow 9s linear infinite; }
+.onto .edge.live { stroke: var(--accent); stroke-dasharray: none; stroke-width: 1.8; animation: none; }
+.onto .node rect { fill: color-mix(in oklab, var(--card) 94%, transparent); stroke: var(--border); stroke-width: 1.2; }
+.onto .node.core rect { stroke: var(--accent); stroke-width: 1.8; }
+.onto .node.gate rect { stroke: var(--warn); stroke-dasharray: 4 3; }
+.onto .node text { fill: var(--fg); font-family: var(--font-mono); font-size: 13px; }
+.onto .node text.sub { fill: var(--muted); font-size: 10.5px; }
+.onto .elabel { fill: var(--muted); font-family: var(--font-mono); font-size: 10px; }
+@keyframes flow { to { stroke-dashoffset: -100; } }
+
+.statstrip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-top: 52px; background: color-mix(in oklab, var(--surface) 72%, transparent); }
+.statstrip .stat { padding: 18px 20px; border-right: 1px solid var(--border); }
+.statstrip .stat:last-child { border-right: 0; }
+.statstrip .stat b { font-size: clamp(1.9rem, 3.4vw, 2.8rem); color: var(--display-color); }
+@media (max-width: 900px) { .statstrip { grid-template-columns: repeat(2, minmax(0, 1fr)); } .statstrip .stat { border-bottom: 1px solid var(--border); } .statstrip .stat:last-child { grid-column: 1 / -1; } }
+
+/* ---------- Problem ---------- */
+.pain { display: flex; flex-direction: column; gap: 10px; }
+.pain .n { font-family: var(--font-display); font-size: 2.4rem; line-height: .8; color: color-mix(in oklab, var(--accent) 75%, transparent); text-transform: var(--display-case); }
+.pain h3 { font-size: 1.45rem; }
+.pain p { font-size: 0.84rem; color: var(--muted); margin: 0; }
+
+/* ---------- Idea: four jobs ---------- */
+.pillars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.pillars > div { padding: 26px 22px; border-right: 1px solid var(--border); position: relative; background: color-mix(in oklab, var(--card) 60%, transparent); }
+.pillars > div:last-child { border-right: 0; }
+.pillars .ico { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in oklab, var(--accent) 14%, transparent); color: var(--accent); margin-bottom: 16px; }
+.pillars .ico svg { width: 20px; height: 20px; }
+.pillars h3 { font-size: 1.4rem; margin-bottom: 8px; }
+.pillars p { font-size: 0.82rem; color: var(--muted); margin: 0; }
+.pillars .tg { display: block; margin-top: 12px; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .06em; color: var(--fg); opacity: .8; }
+@media (max-width: 900px) { .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pillars > div { border-bottom: 1px solid var(--border); } }
+@media (max-width: 560px) { .pillars { grid-template-columns: minmax(0, 1fr); } .pillars > div { border-right: 0; } }
+
+/* ---------- Ledger ---------- */
+.ledger-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 18px; align-items: start; margin-top: 18px; }
+@media (max-width: 900px) { .ledger-grid { grid-template-columns: minmax(0, 1fr); } }
+pre.code { margin: 0; padding: 16px 18px; overflow-x: auto; font-family: var(--font-mono); font-size: .78rem; line-height: 1.55; color: var(--fg); background: color-mix(in oklab, var(--fg) 5%, var(--bg)); border-radius: var(--radius); border: 1px solid var(--border); }
+pre.code code { background: none; padding: 0; border-radius: 0; font-size: inherit; }
+pre.code .k { color: var(--accent); }
+pre.code .c { color: var(--muted); }
+.claim-list { margin: 8px 0 0; padding-left: 1.1em; font-size: .86rem; }
+.claim-list li { margin: 4px 0; }
+.claim-list.no li::marker { color: var(--risk); }
+.claim-list.yes li::marker { color: var(--ok); }
+
+/* ---------- Platforms ---------- */
+.diagram { display: grid; gap: 10px; }
+.diagram .sandbox { border: 1.5px dashed var(--border-strong); border-radius: var(--radius); padding: 10px 14px 14px; }
+.diagram .zone { margin: 0 0 8px; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.diagram .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; list-style: none; padding: 0; margin: 0; }
+.diagram .node { background: color-mix(in oklab, var(--card) 92%, transparent); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 9px 12px; font-size: .82rem; font-weight: 700; }
+.diagram .node small { display: block; font-weight: 400; color: var(--muted); font-size: .72rem; font-family: var(--font-mono); }
+.diagram .node.strong { border: 1.5px solid var(--accent); }
+.diagram .arrow { color: var(--muted); font-size: 1.2rem; }
+.diagram .down { margin: 0; color: var(--muted); font-size: .78rem; font-family: var(--font-mono); }
+.diagram .services { align-items: stretch; }
+.diagram .services .node { flex: 1 1 9.5rem; }
+.diagram .node.host { border-style: dashed; }
+
+.plat-switch { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 16px; }
+.plat-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+@media (max-width: 980px) { .plat-layout { grid-template-columns: minmax(0, 1fr); } }
+.plat-detail dl { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 8px 14px; margin: 0; font-size: .84rem; }
+.plat-detail dt { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.plat-detail dd { margin: 0; overflow-wrap: anywhere; }
+@media (max-width: 520px) { .plat-detail dl { grid-template-columns: minmax(0, 1fr); gap: 2px; } .plat-detail dd { margin-bottom: 8px; } }
+.layers { display: flex; flex-wrap: wrap; gap: 6px; }
+.layer { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: var(--radius-pill); font-family: var(--font-mono); font-size: .66rem; border: 1px solid var(--border); }
+.layer.on { border-color: color-mix(in oklab, var(--ok) 60%, transparent); background: color-mix(in oklab, var(--ok) 14%, transparent); }
+.layer.off { opacity: .7; text-decoration: line-through; }
+.cmds { margin: 0; padding: 10px 12px; list-style: none; font-family: var(--font-mono); font-size: .76rem; background: color-mix(in oklab, var(--fg) 5%, var(--bg)); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow-x: auto; }
+.cmds li { white-space: nowrap; }
+.cmds li::before { content: "$ "; color: var(--accent); }
+.matrix td:first-child { white-space: nowrap; font-weight: 700; }
+.matrix tr[aria-current="true"] td { background: color-mix(in oklab, var(--accent) 8%, transparent); }
+
+/* ---------- Negotiation ---------- */
+.tag { display: inline-block; font-family: var(--font-mono); font-size: .64rem; font-weight: 700; letter-spacing: .04em; padding: 2px 8px; border-radius: var(--radius-pill); margin-right: 8px; border: 1px solid transparent; }
+.tag.tight { background: color-mix(in oklab, var(--warn) 18%, transparent); border-color: color-mix(in oklab, var(--warn) 50%, transparent); }
+.tag.room { background: color-mix(in oklab, var(--ok) 16%, transparent); border-color: color-mix(in oklab, var(--ok) 50%, transparent); }
+.counts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+.counts .stat { padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--radius); background: color-mix(in oklab, var(--card) 80%, transparent); }
+.counts .stat b { color: var(--display-color); }
+
+/* ---------- Roadmap ---------- */
+.pipeline.six { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+@media (max-width: 1100px) { .pipeline.six { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .pipeline.six { grid-template-columns: minmax(0, 1fr); } }
+.pipeline .when { font-family: var(--font-mono); font-size: .66rem; color: var(--fg); opacity: .85; }
+
+/* ---------- Documents ---------- */
+.doc-card { display: grid; gap: 8px; align-content: start; }
+.doc-card h3 { font-size: 1.35rem; margin: 0; }
+.doc-card p { margin: 0; font-size: .82rem; color: var(--muted); }
+.doc-card .go { font-family: var(--font-mono); font-size: .68rem; color: var(--accent); }
