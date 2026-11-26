@@ -9,6 +9,13 @@ ledger, so the person can see what it believed, what it shared, what it did and 
 > **Site:** https://yorkerhodes3.github.io/agentic-ontology/ (with a selectable style guide:
 > CoLab by default, MetaMask and neocloud presets; see the
 > [style guide page](https://yorkerhodes3.github.io/agentic-ontology/style-guide.html))
+>
+> **Simulations:** the [simulation dashboard](https://yorkerhodes3.github.io/agentic-ontology/simulate.html)
+> shows a live board of agent runs and follows one from start to finish across every element,
+> including each ledger write. The [two-sides screen](https://yorkerhodes3.github.io/agentic-ontology/negotiate.html)
+> puts the tenant's and the landlord's agents at one table, each with its own private
+> simulation, and lets you swap between them. Both are synthetic and deterministic; the
+> negotiation is computed by the real vendored Neocloud engine.
 
 The project follows the
 [Ethical Tech CoLab project startup guide](https://github.com/Ethical-Tech-CoLab/project-startup-guide):
@@ -47,12 +54,15 @@ TrustGraph code. The concept's references to TrustGraph are pinned to commit
 The site in `docs/` is static: no build step and no runtime dependencies.
 
 ```bash
-npm test        # theme contrast for every style guide, self-hosted fonts, platform profiles vs SPECIFICATION §9.1
+npm test        # style-guide contrast, fonts, platform profiles vs SPECIFICATION §9.1,
+                # SHA-256 and ledger tamper checks, flow invariants, lease acceptance A-07/A-08
 npm run serve   # http://127.0.0.1:8765/
 ```
 
 Style guides live in `docs/assets/js/themes.js`; platform profiles in
-`docs/assets/js/platforms.js`. Pushes to `main` that touch the site run the tests and
+`docs/assets/js/platforms.js`. The simulations use `docs/assets/js/wayfinder/` (scenario
+flows, the hash-chained ledger, the S3 lease fixtures) and the unmodified Neocloud engine in
+`docs/assets/js/vendor/neocloud-nego/`. Pushes to `main` that touch the site run the tests and
 then deploy to GitHub Pages.
 
 ## Licence
